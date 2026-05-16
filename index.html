@@ -1,0 +1,1346 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cadre de Résultats · PASEA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+:root {
+  --blue:       #1565C0;
+  --blue-dark:  #0D47A1;
+  --blue-soft:  #E3EEF9;
+  --bg:         #F0EEE9;
+  --surface:    #FFFFFF;
+  --ink:        #1A1A1A;
+  --ink-muted:  #6B6B6B;
+  --ink-faint:  #A0A0A0;
+  --border:     #E5E2DD;
+  --border-strong: #C9C5BD;
+  --green:      #2D7A4F;
+  --green-soft: #E6F2EB;
+  --amber:      #B8742A;
+  --amber-soft: #FBEFDC;
+  --red:        #B23A3A;
+  --red-soft:   #F6E2E1;
+  --gold:       #B8965A;
+  --gold-soft:  #F4ECD8;
+  --serif:      "Cormorant Garamond", Georgia, serif;
+  --sans:       "Jost", -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.55; }
+body { padding-bottom: 80px; }
+
+a { color: var(--blue); text-decoration: none; }
+button { font-family: var(--sans); cursor: pointer; border: 0; background: none; color: inherit; }
+
+/* ============ HEADER ============ */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar-inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 18px 28px;
+  display: flex; align-items: center; gap: 18px;
+}
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-logo {
+  width: 48px; height: 48px;
+  background: var(--blue);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: 22px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.brand-text { line-height: 1.2; }
+.brand-name { font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--ink); }
+.brand-sub  { font-size: 12px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 1.2px; }
+
+.topbar-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.btn {
+  padding: 9px 16px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-radius: 4px;
+  transition: all .15s ease;
+}
+.btn:hover { border-color: var(--blue); color: var(--blue); }
+.btn-primary {
+  background: var(--blue); color: #fff; border-color: var(--blue);
+}
+.btn-primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); color: #fff; }
+.btn-small { padding: 6px 12px; font-size: 12px; }
+
+.periode-tag {
+  font-size: 12px; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: 1.5px;
+  padding-right: 14px; border-right: 1px solid var(--border);
+}
+.periode-tag b { color: var(--ink); font-weight: 600; letter-spacing: 0.8px; }
+
+/* ============ HERO : ODP ============ */
+.hero {
+  max-width: 1280px; margin: 36px auto 24px;
+  padding: 0 28px;
+}
+.odp-card {
+  background: linear-gradient(115deg, #FAFAF7 0%, #FFFFFF 100%);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--blue);
+  padding: 28px 36px;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 36px;
+  align-items: start;
+}
+.odp-label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--blue-dark);
+  line-height: 1;
+}
+.odp-text {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.odp-text::before { content: "« "; color: var(--blue); font-weight: 500; }
+.odp-text::after  { content: " »"; color: var(--blue); font-weight: 500; }
+
+/* ============ KPI BAND ============ */
+.kpis {
+  max-width: 1280px; margin: 24px auto;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 22px 24px;
+  border-radius: 4px;
+  position: relative;
+}
+.kpi-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--ink-muted); font-weight: 500;
+}
+.kpi-value {
+  font-family: var(--serif);
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1;
+  margin-top: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.kpi-sub {
+  font-size: 12px; color: var(--ink-muted); margin-top: 6px;
+}
+.kpi .dot {
+  position: absolute; top: 22px; right: 24px;
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.dot-green { background: var(--green); }
+.dot-amber { background: var(--amber); }
+.dot-red   { background: var(--red); }
+.dot-grey  { background: var(--ink-faint); }
+.kpi-green .kpi-value { color: var(--green); }
+.kpi-amber .kpi-value { color: var(--amber); }
+.kpi-red   .kpi-value { color: var(--red); }
+
+/* ============ FRISE PROJET ============ */
+.frise {
+  max-width: 1280px; margin: 32px auto;
+  padding: 0 28px;
+}
+.frise-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 24px 32px 28px;
+}
+.frise-title {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--ink-muted); font-weight: 500; margin-bottom: 22px;
+}
+.frise-track {
+  position: relative;
+  height: 6px; background: var(--border);
+  border-radius: 3px;
+  margin: 38px 12px 28px;
+}
+.frise-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--blue);
+  border-radius: 3px;
+}
+.frise-jalon {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px; height: 14px;
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  z-index: 2;
+}
+.frise-jalon.atteint { border-color: var(--blue); background: var(--blue); }
+.frise-jalon.actuel  {
+  border-color: var(--amber);
+  background: var(--amber);
+  width: 18px; height: 18px;
+  box-shadow: 0 0 0 4px var(--amber-soft);
+}
+.frise-jalon-label {
+  position: absolute; top: 22px; transform: translateX(-50%);
+  font-size: 11px; color: var(--ink-muted);
+  white-space: nowrap;
+  text-align: center;
+}
+.frise-jalon-label b {
+  display: block;
+  font-size: 13px; color: var(--ink);
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+}
+.frise-jalon-top {
+  position: absolute; bottom: 22px; transform: translateX(-50%);
+  font-size: 11px; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ============ MODULE PBC/CBP ============ */
+.pbc-section {
+  max-width: 1280px; margin: 32px auto;
+  padding: 0 28px;
+}
+.pbc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 26px 32px;
+}
+.pbc-header { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6px; }
+.pbc-title {
+  font-family: var(--serif); font-size: 26px; font-weight: 500;
+  color: var(--ink);
+}
+.pbc-baseline {
+  font-size: 11px; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 2px; font-weight: 600;
+}
+.pbc-desc {
+  font-size: 13px; color: var(--ink-muted);
+  margin-bottom: 22px; max-width: 700px;
+}
+.pbc-table {
+  width: 100%; border-collapse: collapse;
+}
+.pbc-table th {
+  text-align: left;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1.3px;
+  color: var(--ink-muted); font-weight: 500;
+  padding: 10px 14px 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pbc-table td {
+  padding: 16px 14px 16px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  vertical-align: top;
+}
+.pbc-table tr:last-child td { border-bottom: 0; }
+.pbc-code {
+  font-family: var(--sans); font-weight: 600; color: var(--blue);
+  font-size: 13px;
+}
+.pbc-amount {
+  font-family: var(--serif); font-style: italic;
+  font-size: 22px; font-weight: 500;
+  color: var(--gold); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.pbc-table tr:has(.status-vert)   td { background: linear-gradient(90deg, var(--green-soft) 0%, transparent 100%); }
+.pbc-table tr:has(.status-rouge)  td { background: linear-gradient(90deg, var(--red-soft) 0%, transparent 100%); }
+
+/* ============ COMPOSANTES NAV ============ */
+.composantes-section {
+  max-width: 1280px; margin: 32px auto;
+  padding: 0 28px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 32px; font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 20px;
+  display: flex; align-items: baseline; gap: 14px;
+}
+.section-title em { font-style: italic; color: var(--blue); }
+.section-title span {
+  font-family: var(--sans);
+  font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--ink-muted); font-weight: 500;
+}
+
+.tabs {
+  display: flex; gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+  overflow-x: auto;
+}
+.tab {
+  padding: 12px 18px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
+.tab-count {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  font-size: 11px;
+  background: var(--bg); border-radius: 10px;
+  color: var(--ink-muted);
+}
+.tab.active .tab-count { background: var(--blue-soft); color: var(--blue); }
+
+/* ============ FICHE INDICATEUR ============ */
+.indicateurs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.fiche {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: 100px 1fr 220px 160px;
+  gap: 24px;
+  align-items: center;
+  transition: border-color .15s ease;
+}
+.fiche:hover { border-color: var(--border-strong); }
+.fiche.sub {
+  margin-left: 38px;
+  padding: 14px 22px;
+  background: #FBFAF8;
+  border-style: dashed;
+}
+
+.fiche-code {
+  font-size: 12px; font-weight: 600;
+  color: var(--blue);
+  letter-spacing: 0.5px;
+  font-variant-numeric: tabular-nums;
+}
+.fiche-code-sub { font-size: 11px; color: var(--ink-muted); margin-top: 4px; font-weight: 400; letter-spacing: 0; }
+
+.fiche-body { min-width: 0; }
+.fiche-titre {
+  font-size: 14px; color: var(--ink);
+  line-height: 1.4;
+  font-weight: 500;
+}
+.fiche-sub .fiche-titre { font-size: 13px; color: var(--ink-muted); }
+.fiche-badges { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+
+.badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid;
+}
+.badge-iri  { color: var(--blue); border-color: var(--blue-soft); background: var(--blue-soft); }
+.badge-cbp  { color: var(--gold); border-color: var(--gold-soft); background: var(--gold-soft); }
+.badge-smr  { color: var(--blue-dark); border-color: var(--blue-soft); background: var(--surface); }
+.badge-na   { color: var(--ink-muted); border-color: var(--border); background: var(--bg); }
+
+/* Progress */
+.fiche-progress { display: flex; flex-direction: column; gap: 6px; }
+.progress-track {
+  position: relative;
+  height: 6px; background: var(--border);
+  border-radius: 3px;
+}
+.progress-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  border-radius: 3px;
+  transition: width .4s ease;
+}
+.progress-fill.vert  { background: var(--green); }
+.progress-fill.orange{ background: var(--amber); }
+.progress-fill.rouge { background: var(--red); }
+.progress-fill.gris  { background: var(--ink-faint); }
+.progress-target {
+  position: absolute; top: -3px;
+  width: 2px; height: 12px;
+  background: var(--ink);
+}
+.progress-meta {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.progress-meta b { color: var(--ink); font-weight: 600; }
+
+/* Status pill */
+.fiche-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.status-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  padding: 5px 11px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.status-pill::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+}
+.status-vert  { background: var(--green-soft); color: var(--green); }
+.status-vert::before  { background: var(--green); }
+.status-orange{ background: var(--amber-soft); color: var(--amber); }
+.status-orange::before{ background: var(--amber); }
+.status-rouge { background: var(--red-soft); color: var(--red); }
+.status-rouge::before { background: var(--red); }
+.status-neutre{ background: var(--bg); color: var(--ink-muted); }
+.status-neutre::before{ background: var(--ink-faint); }
+
+.btn-details {
+  font-size: 11px; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 1px;
+  font-weight: 500;
+}
+.btn-details:hover { text-decoration: underline; }
+
+/* Tendance (trajectoire) */
+.trajectoire {
+  font-size: 11px; color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.trajectoire b { color: var(--ink); font-weight: 600; }
+.trajectoire.alerte b { color: var(--red); }
+.trajectoire.bon b    { color: var(--green); }
+
+/* ============ MODAL ============ */
+.modal-bg {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(26, 26, 26, .55);
+  z-index: 100;
+  align-items: flex-start; justify-content: center;
+  overflow-y: auto;
+  padding: 40px 20px;
+}
+.modal-bg.show { display: flex; }
+.modal {
+  background: var(--surface);
+  width: 100%; max-width: 920px;
+  border-radius: 4px;
+  padding: 36px 44px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.18);
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 18px; right: 22px;
+  font-size: 24px; color: var(--ink-muted);
+  width: 36px; height: 36px;
+  line-height: 1;
+}
+.modal-close:hover { color: var(--ink); }
+.modal-eyebrow {
+  font-size: 11px; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 1.8px;
+  font-weight: 600; margin-bottom: 8px;
+}
+.modal-titre {
+  font-family: var(--serif);
+  font-size: 28px; font-weight: 500;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.modal-unite { font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; }
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.cell {
+  border: 1px solid var(--border);
+  background: #FBFAF8;
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+.cell-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1.3px;
+  color: var(--ink-muted); font-weight: 500;
+}
+.cell-value {
+  font-family: var(--serif);
+  font-size: 22px; font-weight: 500;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.modal-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.modal-section h4 {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--ink-muted); font-weight: 600;
+  margin-bottom: 12px;
+}
+.modal-section p {
+  font-size: 14px; line-height: 1.6; color: var(--ink);
+}
+
+.dl-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 10px 24px;
+  font-size: 13px;
+}
+.dl-grid dt { color: var(--ink-muted); }
+.dl-grid dd { color: var(--ink); }
+
+.modal-actions {
+  margin-top: 28px;
+  display: flex; gap: 10px;
+}
+
+/* Trajectoire bloc dans modal */
+.traj-box {
+  background: linear-gradient(135deg, var(--blue-soft) 0%, #fff 100%);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  padding: 18px 22px;
+  border-radius: 4px;
+}
+.traj-box.alerte { border-left-color: var(--red); background: linear-gradient(135deg, var(--red-soft) 0%, #fff 100%); }
+.traj-box.bon    { border-left-color: var(--green); background: linear-gradient(135deg, var(--green-soft) 0%, #fff 100%); }
+.traj-titre { font-size: 12px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 1.3px; }
+.traj-valeur {
+  font-family: var(--serif);
+  font-size: 30px; font-weight: 500;
+  margin: 6px 0;
+  font-variant-numeric: tabular-nums;
+}
+.traj-detail { font-size: 13px; color: var(--ink-muted); }
+
+/* ============ FORMULAIRE SAISIE ============ */
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 12px; text-transform: uppercase; letter-spacing: 1.3px;
+  color: var(--ink-muted); font-weight: 500;
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  font-family: var(--sans); font-size: 14px;
+  color: var(--ink);
+  border-radius: 4px;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none; border-color: var(--blue);
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.feedback {
+  padding: 12px 14px;
+  font-size: 13px;
+  border-radius: 4px;
+  margin-top: 14px;
+}
+.feedback.ok   { background: var(--green-soft); color: var(--green); }
+.feedback.err  { background: var(--red-soft);   color: var(--red); }
+
+/* ============ FOOTER ============ */
+.footer {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 12px 28px;
+  font-size: 11px;
+  color: var(--ink-muted);
+  text-align: center;
+  letter-spacing: 0.4px;
+}
+.footer b { color: var(--ink); font-weight: 600; }
+
+/* ============ LOADER ============ */
+.loader {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--ink-muted);
+  font-family: var(--serif); font-style: italic;
+  font-size: 18px;
+}
+.loader::after {
+  content: "."; display: inline-block;
+  animation: dots 1.2s steps(4, end) infinite;
+  width: 1em; text-align: left;
+}
+@keyframes dots {
+  0%, 20%   { content: "."; }
+  40%       { content: ".."; }
+  60%, 100% { content: "..."; }
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1000px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .fiche { grid-template-columns: 80px 1fr; }
+  .fiche-progress, .fiche-status { grid-column: 1 / -1; align-items: flex-start; }
+  .fiche-status { flex-direction: row; justify-content: space-between; align-items: center; }
+  .modal-grid { grid-template-columns: repeat(2, 1fr); }
+  .dl-grid { grid-template-columns: 1fr; gap: 2px 0; }
+  .dl-grid dd { margin-bottom: 10px; }
+  .odp-card { grid-template-columns: 1fr; gap: 12px; }
+  .odp-label { font-size: 22px; }
+}
+
+/* ============ PRINT ============ */
+@media print {
+  .topbar, .footer, .btn, .modal-bg, .tabs { display: none !important; }
+  body { background: #fff; padding: 0; }
+  .fiche, .kpi, .odp-card, .frise-card, .pbc-card { break-inside: avoid; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-logo">P</div>
+      <div class="brand-text">
+        <div class="brand-name">Cadre de Résultats</div>
+        <div class="brand-sub">UC-PASEA · Crédit IDA N° 7562-CI</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="periode-tag">Période <b id="periode-label">…</b></div>
+      <button class="btn" id="btn-refresh">Actualiser</button>
+      <button class="btn" id="btn-export">Exporter PDF</button>
+      <button class="btn btn-primary" id="btn-saisie">Saisir une valeur</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="loader" id="loader">Chargement des indicateurs</div>
+</main>
+
+<footer class="footer">
+  Développé par <b>J. MESSOUM</b> · Assistant Suivi-Évaluation · UC-PASEA &copy; 2026
+</footer>
+
+<!-- Modal détail indicateur -->
+<div class="modal-bg" id="modal-detail">
+  <div class="modal" id="modal-detail-content">
+    <button class="modal-close" data-close>&times;</button>
+    <div id="modal-detail-body"></div>
+  </div>
+</div>
+
+<!-- Modal saisie -->
+<div class="modal-bg" id="modal-saisie">
+  <div class="modal" style="max-width: 560px;">
+    <button class="modal-close" data-close>&times;</button>
+    <div class="modal-eyebrow">Mise à jour d'une valeur</div>
+    <div class="modal-titre" style="margin-bottom: 22px;">Saisir une nouvelle valeur</div>
+
+    <div class="form-group">
+      <label>Indicateur</label>
+      <select id="saisie-code"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nouvelle valeur</label>
+        <input type="text" id="saisie-valeur" placeholder="Ex. 25000 ou Oui" />
+      </div>
+      <div class="form-group">
+        <label>Période (AAAA-MM)</label>
+        <input type="text" id="saisie-periode" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Commentaire (optionnel)</label>
+      <textarea id="saisie-commentaire" placeholder="Précisions sur l'évolution, source, observations..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Saisi par</label>
+      <input type="text" id="saisie-user" value="J. MESSOUM" />
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="btn-saisie-submit">Enregistrer</button>
+      <button class="btn" data-close>Annuler</button>
+    </div>
+    <div id="saisie-feedback"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================================
+// CONFIGURATION
+// À remplacer par l'URL du déploiement Apps Script une fois publié
+// ============================================================================
+const API_URL = "https://script.google.com/macros/s/AKfycbxzAiEREIwLASnKiVuMj2PrS-gLs7q9_Ufzl438jd9EQhK0LUuxsOH-xe0fH74RNgyM/exec";
+
+// État global
+let DATA = { indicateurs: [], config: {} };
+
+// ============================================================================
+// CHARGEMENT INITIAL
+// ============================================================================
+async function chargerDonnees() {
+  document.getElementById("main").innerHTML = '<div class="loader" id="loader">Chargement des indicateurs</div>';
+  try {
+    const res = await fetch(API_URL + "?action=getAll");
+    const json = await res.json();
+    if (json.error) throw new Error(json.error);
+    DATA = json;
+    rendreInterface();
+  } catch (err) {
+    document.getElementById("main").innerHTML =
+      '<div class="loader" style="color: var(--red);">Erreur de chargement : ' +
+      err.message + '</div>';
+  }
+}
+
+// ============================================================================
+// CALCULS : RAG, TRAJECTOIRE, PROGRESSION
+// ============================================================================
+function ratioTempsEcoule(config) {
+  const debut = new Date(config.date_demarrage || "2024-03-01");
+  const fin   = new Date(config.date_cloture   || "2030-03-01");
+  const maintenant = new Date();
+  if (maintenant <= debut) return 0;
+  if (maintenant >= fin) return 1;
+  return (maintenant - debut) / (fin - debut);
+}
+
+function num(v) {
+  if (v === null || v === undefined || v === "") return null;
+  if (typeof v === "number") return v;
+  const n = Number(String(v).replace(/\s/g, "").replace(",", "."));
+  return isNaN(n) ? null : n;
+}
+
+function calculProgression(ind) {
+  if (ind.Type !== "numerique") return null;
+  const ref = num(ind.Valeur_Reference);
+  const act = num(ind.Valeur_Actuelle);
+  const cib = num(ind.Cible_Fin);
+  if (ref === null || act === null || cib === null) return null;
+  if (cib === ref) return act >= cib ? 1 : 0;
+  let p;
+  if (cib > ref) p = (act - ref) / (cib - ref);
+  else           p = (ref - act) / (ref - cib);
+  return Math.max(0, Math.min(1.2, p));
+}
+
+function calculRAG(ind, config) {
+  if (ind.Type === "na") return "neutre";
+  const seuilV = num(config.seuil_vert)   ?? 0.85;
+  const seuilO = num(config.seuil_orange) ?? 0.50;
+  const tempsEcoule = ratioTempsEcoule(config);
+
+  if (ind.Type === "booleen") {
+    if (String(ind.Valeur_Actuelle).toLowerCase() === "oui") return "vert";
+    if (tempsEcoule < 0.5)  return "orange";
+    if (tempsEcoule < 0.85) return "orange";
+    return "rouge";
+  }
+
+  const p = calculProgression(ind);
+  if (p === null) return "neutre";
+  if (tempsEcoule < 0.02) return "neutre";
+
+  const ratio = p / tempsEcoule;
+  if (ratio >= seuilV) return "vert";
+  if (ratio >= seuilO) return "orange";
+  return "rouge";
+}
+
+function trajectoirePrediction(ind, config) {
+  if (ind.Type !== "numerique") return null;
+  const ref = num(ind.Valeur_Reference);
+  const act = num(ind.Valeur_Actuelle);
+  const cib = num(ind.Cible_Fin);
+  if (ref === null || act === null || cib === null) return null;
+  const t = ratioTempsEcoule(config);
+  if (t < 0.05) return null;
+  const projection = ref + (act - ref) / t;
+  const ecart = projection - cib;
+  let statut;
+  if (cib === ref) statut = "neutre";
+  else if (cib > ref) {
+    if (projection >= cib * 0.95) statut = "bon";
+    else if (projection >= cib * 0.70) statut = "alerte";
+    else statut = "alerte";
+  } else {
+    if (projection <= cib * 1.05) statut = "bon";
+    else statut = "alerte";
+  }
+  return { projection, cible: cib, ecart, statut };
+}
+
+// ============================================================================
+// FORMATAGE
+// ============================================================================
+function fmt(v, unite) {
+  if (v === null || v === undefined || v === "") return "—";
+  if (typeof v === "number") {
+    if (unite === "%") return v.toFixed(1) + " %";
+    return v.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
+  }
+  return v;
+}
+
+function fmtUsd(v) {
+  if (!v || v === 0) return "—";
+  if (v >= 1000000) return (v / 1000000).toFixed(1).replace(".0", "") + " M USD";
+  if (v >= 1000)    return (v / 1000).toFixed(0) + " K USD";
+  return v.toLocaleString("fr-FR") + " USD";
+}
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (isNaN(d)) return iso;
+  return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+// ============================================================================
+// RENDU GLOBAL
+// ============================================================================
+function rendreInterface() {
+  const main = document.getElementById("main");
+  document.getElementById("periode-label").textContent = DATA.config.periode_actuelle || "—";
+
+  let html = "";
+  html += rendreHero();
+  html += rendreKPIs();
+  html += rendreFrise();
+  html += rendrePBC();
+  html += rendreComposantes();
+  main.innerHTML = html;
+
+  brancherEvenements();
+}
+
+function rendreHero() {
+  return `
+    <section class="hero">
+      <div class="odp-card">
+        <div class="odp-label">ODP</div>
+        <div class="odp-text">${escapeHTML(DATA.config.odp || "")}</div>
+      </div>
+    </section>
+  `;
+}
+
+function rendreKPIs() {
+  let total = 0, v = 0, o = 0, r = 0, n = 0;
+  DATA.indicateurs.forEach(ind => {
+    if (ind.Type === "na") { n++; return; }
+    total++;
+    const rag = calculRAG(ind, DATA.config);
+    if (rag === "vert") v++;
+    else if (rag === "orange") o++;
+    else if (rag === "rouge") r++;
+    else n++;
+  });
+  const sante = total > 0 ? Math.round((v / total) * 100) : 0;
+
+  return `
+    <section class="kpis">
+      <div class="kpi">
+        <div class="kpi-label">Indicateurs suivis</div>
+        <div class="kpi-value">${total}</div>
+        <div class="kpi-sub">dont ${n} non évaluables à ce stade</div>
+      </div>
+      <div class="kpi kpi-green">
+        <span class="dot dot-green"></span>
+        <div class="kpi-label">En bonne voie</div>
+        <div class="kpi-value">${v}</div>
+        <div class="kpi-sub">progression conforme au calendrier</div>
+      </div>
+      <div class="kpi kpi-amber">
+        <span class="dot dot-amber"></span>
+        <div class="kpi-label">À surveiller</div>
+        <div class="kpi-value">${o}</div>
+        <div class="kpi-sub">vigilance recommandée</div>
+      </div>
+      <div class="kpi kpi-red">
+        <span class="dot dot-red"></span>
+        <div class="kpi-label">En retard</div>
+        <div class="kpi-value">${r}</div>
+        <div class="kpi-sub">risque de non-atteinte des cibles</div>
+      </div>
+    </section>
+  `;
+}
+
+function rendreFrise() {
+  const debut = new Date(DATA.config.date_demarrage || "2024-03-01");
+  const mtr   = new Date(DATA.config.date_mtr       || "2028-03-01");
+  const fin   = new Date(DATA.config.date_cloture   || "2030-03-01");
+  const now   = new Date();
+  const total = fin - debut;
+  const pctNow = Math.max(0, Math.min(100, ((now - debut) / total) * 100));
+  const pctMtr = ((mtr - debut) / total) * 100;
+
+  return `
+    <section class="frise">
+      <div class="frise-card">
+        <div class="frise-title">Avancement du projet</div>
+        <div class="frise-track">
+          <div class="frise-fill" style="width: ${pctNow}%"></div>
+          <div class="frise-jalon atteint" style="left: 0">
+            <div class="frise-jalon-top">Démarrage</div>
+            <div class="frise-jalon-label"><b>Mars 2024</b>Référence</div>
+          </div>
+          <div class="frise-jalon" style="left: ${pctMtr}%">
+            <div class="frise-jalon-top">Revue à mi-parcours</div>
+            <div class="frise-jalon-label"><b>Mars 2028</b>MTR</div>
+          </div>
+          <div class="frise-jalon" style="left: 100%">
+            <div class="frise-jalon-top">Clôture</div>
+            <div class="frise-jalon-label"><b>Mars 2030</b>Fin de projet</div>
+          </div>
+          <div class="frise-jalon actuel" style="left: ${pctNow}%">
+            <div class="frise-jalon-top" style="color: var(--amber); font-weight: 600;">Aujourd'hui</div>
+            <div class="frise-jalon-label"><b>${now.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })}</b>${Math.round(pctNow)}% écoulé</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function rendrePBC() {
+  const cbp = DATA.indicateurs.filter(i => i.Marqueur_BM === "CBP");
+  if (!cbp.length) return "";
+  const totalUsd = cbp.reduce((s, i) => s + (num(i.Montant_CBP_USD) || 0), 0);
+
+  let rows = "";
+  cbp.forEach(ind => {
+    const rag = calculRAG(ind, DATA.config);
+    rows += `
+      <tr>
+        <td><span class="pbc-code">${ind.Code}</span></td>
+        <td>${escapeHTML(ind.Indicateur)}</td>
+        <td><span class="status-pill status-${rag}">${labelRAG(rag)}</span></td>
+        <td style="text-align: right;"><span class="pbc-amount">${fmtUsd(num(ind.Montant_CBP_USD))}</span></td>
+      </tr>
+    `;
+  });
+
+  return `
+    <section class="pbc-section">
+      <div class="pbc-card">
+        <div class="pbc-header">
+          <div class="pbc-title">Conditions Basées sur la Performance</div>
+          <div class="pbc-baseline">CBP · ${cbp.length} indicateurs${totalUsd ? ' · ' + fmtUsd(totalUsd) + ' décaissables' : ''}</div>
+        </div>
+        <p class="pbc-desc">
+          Indicateurs dont l'atteinte conditionne le décaissement par la Banque mondiale.
+          Leur statut doit être suivi de très près tout au long du cycle du projet.
+        </p>
+        <table class="pbc-table">
+          <thead><tr>
+            <th style="width: 120px;">Code</th>
+            <th>Indicateur</th>
+            <th style="width: 140px;">Statut</th>
+            <th style="width: 160px; text-align: right;">Montant CBP</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function rendreComposantes() {
+  const groupes = {};
+  DATA.indicateurs.forEach(ind => {
+    const key = String(ind.Composante);
+    if (!groupes[key]) groupes[key] = { nom: ind.Composante_Nom, items: [] };
+    groupes[key].items.push(ind);
+  });
+
+  const ordreClés = Object.keys(groupes).sort();
+  let tabs = "";
+  let panels = "";
+  ordreClés.forEach((k, i) => {
+    const g = groupes[k];
+    const id = "comp-" + k;
+    tabs += `<button class="tab ${i === 0 ? 'active' : ''}" data-tab="${id}">
+      ${k === "0" ? "Indicateurs ODP" : "Composante " + k}
+      <span class="tab-count">${g.items.length}</span>
+    </button>`;
+
+    let fiches = "";
+    // On affiche d'abord les indicateurs parents, puis leurs sous-indicateurs juste après
+    const parents = g.items.filter(i => !i.Parent_Code);
+    parents.forEach(p => {
+      fiches += rendreFiche(p, false);
+      g.items
+        .filter(s => s.Parent_Code === p.Code)
+        .forEach(s => { fiches += rendreFiche(s, true); });
+    });
+
+    panels += `
+      <div class="indicateurs-grid" id="${id}" style="display: ${i === 0 ? 'grid' : 'none'};">
+        ${fiches}
+      </div>
+    `;
+  });
+
+  return `
+    <section class="composantes-section">
+      <h2 class="section-title">Indicateurs <em>par composante</em><span>cadre de résultats détaillé</span></h2>
+      <div class="tabs">${tabs}</div>
+      ${panels}
+    </section>
+  `;
+}
+
+function rendreFiche(ind, isSub) {
+  const rag = calculRAG(ind, DATA.config);
+  const p = calculProgression(ind);
+  const pctFill = p !== null ? Math.min(p * 100, 100) : 0;
+
+  let valActuelle, valCible;
+  if (ind.Type === "booleen") {
+    valActuelle = ind.Valeur_Actuelle || "Non";
+    valCible    = ind.Cible_Fin       || "Oui";
+  } else if (ind.Type === "na") {
+    valActuelle = "N/A";
+    valCible    = "Sur activation";
+  } else {
+    valActuelle = fmt(num(ind.Valeur_Actuelle), ind.Unite);
+    valCible    = fmt(num(ind.Cible_Fin), ind.Unite);
+  }
+
+  let badges = "";
+  if (ind.Marqueur_BM === "IRI")     badges += '<span class="badge badge-iri">IRI</span>';
+  if (ind.Marqueur_BM === "IRI SMR") badges += '<span class="badge badge-iri">IRI</span><span class="badge badge-smr">SMR</span>';
+  if (ind.Marqueur_BM === "CBP")     badges += '<span class="badge badge-cbp">CBP</span>';
+  if (ind.Type === "na")             badges += '<span class="badge badge-na">CERC</span>';
+
+  // Trajectoire en mini
+  const traj = trajectoirePrediction(ind, DATA.config);
+  let trajLine = "";
+  if (traj && ind.Type === "numerique") {
+    const cls = traj.statut === "alerte" ? "alerte" : traj.statut === "bon" ? "bon" : "";
+    trajLine = `<div class="trajectoire ${cls}">À l'allure actuelle : <b>${fmt(traj.projection, ind.Unite)}</b> en 2030</div>`;
+  }
+
+  const progressHTML = ind.Type === "na" ?
+    `<div class="trajectoire" style="font-style: italic;">Activé sur déclenchement uniquement</div>` :
+    ind.Type === "booleen" ?
+      `<div class="progress-track">
+         <div class="progress-fill ${rag}" style="width: ${String(ind.Valeur_Actuelle).toLowerCase() === 'oui' ? 100 : 5}%"></div>
+       </div>
+       <div class="progress-meta">
+         <span>Actuel : <b>${valActuelle}</b></span>
+         <span>Cible : <b>${valCible}</b></span>
+       </div>` :
+      `<div class="progress-track">
+         <div class="progress-fill ${rag}" style="width: ${pctFill}%"></div>
+       </div>
+       <div class="progress-meta">
+         <span>Actuel : <b>${valActuelle}</b></span>
+         <span>Cible : <b>${valCible}</b></span>
+       </div>
+       ${trajLine}`;
+
+  return `
+    <article class="fiche ${isSub ? 'sub' : ''}" data-code="${ind.Code}">
+      <div>
+        <div class="fiche-code">${ind.Code}</div>
+        ${isSub ? '<div class="fiche-code-sub">sous-indicateur</div>' : ''}
+      </div>
+      <div class="fiche-body">
+        <div class="fiche-titre">${escapeHTML(ind.Indicateur)}</div>
+        <div class="fiche-badges">
+          <span class="badge badge-na">${ind.Unite}</span>
+          ${badges}
+        </div>
+      </div>
+      <div class="fiche-progress">${progressHTML}</div>
+      <div class="fiche-status">
+        <span class="status-pill status-${rag}">${labelRAG(rag)}</span>
+        <button class="btn-details" data-detail="${ind.Code}">Détails →</button>
+      </div>
+    </article>
+  `;
+}
+
+function labelRAG(rag) {
+  return { vert: "En bonne voie", orange: "À surveiller", rouge: "En retard", neutre: "Non évaluable" }[rag] || rag;
+}
+
+// ============================================================================
+// MODAL DETAIL
+// ============================================================================
+function ouvrirDetail(code) {
+  const ind = DATA.indicateurs.find(i => i.Code === code);
+  if (!ind) return;
+  const rag = calculRAG(ind, DATA.config);
+  const traj = trajectoirePrediction(ind, DATA.config);
+  const p = calculProgression(ind);
+
+  let badges = "";
+  if (ind.Marqueur_BM === "IRI")     badges += '<span class="badge badge-iri">IRI</span> ';
+  if (ind.Marqueur_BM === "IRI SMR") badges += '<span class="badge badge-iri">IRI</span> <span class="badge badge-smr">SMR</span> ';
+  if (ind.Marqueur_BM === "CBP")     badges += '<span class="badge badge-cbp">CBP</span> ';
+
+  let trajHTML = "";
+  if (traj) {
+    const cls = traj.statut;
+    const ecartTxt = traj.ecart > 0 ? "+" + fmt(traj.ecart, ind.Unite) : fmt(traj.ecart, ind.Unite);
+    trajHTML = `
+      <div class="modal-section">
+        <h4>Trajectoire prédictive</h4>
+        <div class="traj-box ${cls}">
+          <div class="traj-titre">Projection à la clôture (mars 2030)</div>
+          <div class="traj-valeur">${fmt(traj.projection, ind.Unite)}</div>
+          <div class="traj-detail">
+            Cible : ${fmt(traj.cible, ind.Unite)} · Écart projeté : <b>${ecartTxt}</b>
+          </div>
+        </div>
+        <p style="font-size: 12px; color: var(--ink-muted); margin-top: 10px; font-style: italic;">
+          Projection linéaire à partir du rythme observé entre la valeur de référence et la valeur actuelle.
+          Elle suppose un maintien de la même progression jusqu'à la clôture.
+        </p>
+      </div>
+    `;
+  }
+
+  const cbpHTML = (ind.Marqueur_BM === "CBP" && num(ind.Montant_CBP_USD)) ? `
+    <div class="modal-section">
+      <h4>Conditions Basées sur la Performance</h4>
+      <p style="font-size: 14px;">
+        Cet indicateur conditionne le décaissement de <b style="font-family: var(--serif); font-size: 22px; color: var(--gold); font-style: italic;">${fmtUsd(num(ind.Montant_CBP_USD))}</b> par la Banque mondiale.
+      </p>
+    </div>
+  ` : "";
+
+  const body = `
+    <div class="modal-eyebrow">${ind.Code} · ${ind.Composante_Nom}</div>
+    <div class="modal-titre">${escapeHTML(ind.Indicateur)}</div>
+    <div class="modal-unite">Unité : ${ind.Unite} · ${badges} <span class="status-pill status-${rag}" style="margin-left: 8px;">${labelRAG(rag)}</span></div>
+
+    <div class="modal-grid">
+      <div class="cell"><div class="cell-label">Référence ${ind.Date_Reference || ""}</div><div class="cell-value">${fmt(ind.Valeur_Reference, ind.Unite)}</div></div>
+      <div class="cell"><div class="cell-label">Valeur actuelle</div><div class="cell-value">${fmt(ind.Valeur_Actuelle, ind.Unite)}</div></div>
+      <div class="cell"><div class="cell-label">Cible MTR 2028</div><div class="cell-value">${fmt(ind.Cible_MTR, ind.Unite)}</div></div>
+      <div class="cell"><div class="cell-label">Cible Fin 2030</div><div class="cell-value">${fmt(ind.Cible_Fin, ind.Unite)}</div></div>
+    </div>
+
+    ${trajHTML}
+    ${cbpHTML}
+
+    <div class="modal-section">
+      <h4>Commentaire</h4>
+      <p>${escapeHTML(ind.Commentaire || "—")}</p>
+    </div>
+
+    <div class="modal-section">
+      <h4>Méthodologie</h4>
+      <dl class="dl-grid">
+        <dt>Désagrégation</dt>            <dd>${escapeHTML(ind.Desagregation || "—")}</dd>
+        <dt>Source de vérification</dt>   <dd>${escapeHTML(ind.Source_Verification || "—")}</dd>
+        <dt>Fréquence de collecte</dt>    <dd>${escapeHTML(ind.Frequence || "—")}</dd>
+        <dt>Responsable</dt>              <dd>${escapeHTML(ind.Responsable || "—")}</dd>
+        <dt>Méthode de collecte</dt>      <dd>${escapeHTML(ind.Methode_Collecte || "—")}</dd>
+      </dl>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="detail-saisir">Mettre à jour cet indicateur</button>
+      <button class="btn" data-close>Fermer</button>
+    </div>
+  `;
+  document.getElementById("modal-detail-body").innerHTML = body;
+  document.getElementById("modal-detail").classList.add("show");
+
+  document.getElementById("detail-saisir").onclick = () => {
+    fermerModales();
+    ouvrirSaisie(code);
+  };
+}
+
+// ============================================================================
+// MODAL SAISIE
+// ============================================================================
+function ouvrirSaisie(preselectCode) {
+  const select = document.getElementById("saisie-code");
+  select.innerHTML = '<option value="">— Choisir un indicateur —</option>' +
+    DATA.indicateurs
+      .filter(i => i.Type !== "na")
+      .map(i => `<option value="${i.Code}">${i.Code} · ${i.Indicateur.substring(0, 70)}${i.Indicateur.length > 70 ? '…' : ''}</option>`)
+      .join("");
+  if (preselectCode) select.value = preselectCode;
+
+  document.getElementById("saisie-valeur").value = "";
+  document.getElementById("saisie-commentaire").value = "";
+  document.getElementById("saisie-periode").value = DATA.config.periode_actuelle || formatPeriodeJS(new Date());
+  document.getElementById("saisie-feedback").innerHTML = "";
+  document.getElementById("modal-saisie").classList.add("show");
+}
+
+async function soumettreSaisie() {
+  const code = document.getElementById("saisie-code").value;
+  const valeur = document.getElementById("saisie-valeur").value;
+  const periode = document.getElementById("saisie-periode").value;
+  const commentaire = document.getElementById("saisie-commentaire").value;
+  const user = document.getElementById("saisie-user").value;
+  const fb = document.getElementById("saisie-feedback");
+
+  if (!code) { fb.className = "feedback err"; fb.textContent = "Choisissez d'abord un indicateur."; return; }
+  if (valeur === "") { fb.className = "feedback err"; fb.textContent = "Saisissez une valeur."; return; }
+
+  fb.className = "feedback"; fb.textContent = "Enregistrement en cours…";
+
+  try {
+    const params = new URLSearchParams({
+      action: "updateValue",
+      code, valeur, periode, commentaire, utilisateur: user
+    });
+    const res = await fetch(API_URL + "?" + params.toString());
+    const json = await res.json();
+    if (json.error) throw new Error(json.error);
+    fb.className = "feedback ok";
+    fb.textContent = "Valeur enregistrée pour " + json.code + ".";
+    setTimeout(() => { fermerModales(); chargerDonnees(); }, 900);
+  } catch (err) {
+    fb.className = "feedback err"; fb.textContent = "Erreur : " + err.message;
+  }
+}
+
+function formatPeriodeJS(d) {
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+}
+
+// ============================================================================
+// EXPORT PDF
+// ============================================================================
+function exporterPDF() {
+  const el = document.getElementById("main");
+  const opt = {
+    margin: 12,
+    filename: "Cadre_Resultats_PASEA_" + (DATA.config.periode_actuelle || "export") + ".pdf",
+    image: { type: "jpeg", quality: 0.94 },
+    html2canvas: { scale: 2, backgroundColor: "#F0EEE9" },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    pagebreak: { mode: ["css", "legacy"] }
+  };
+  html2pdf().set(opt).from(el).save();
+}
+
+// ============================================================================
+// EVENEMENTS
+// ============================================================================
+function brancherEvenements() {
+  document.querySelectorAll(".tab").forEach(t => {
+    t.onclick = () => {
+      document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+      t.classList.add("active");
+      const id = t.dataset.tab;
+      document.querySelectorAll(".indicateurs-grid").forEach(g => g.style.display = "none");
+      document.getElementById(id).style.display = "grid";
+    };
+  });
+
+  document.querySelectorAll("[data-detail]").forEach(b => {
+    b.onclick = () => ouvrirDetail(b.dataset.detail);
+  });
+  document.querySelectorAll(".fiche").forEach(f => {
+    f.addEventListener("click", e => {
+      if (e.target.closest("button")) return;
+      ouvrirDetail(f.dataset.code);
+    });
+  });
+}
+
+function fermerModales() {
+  document.querySelectorAll(".modal-bg").forEach(m => m.classList.remove("show"));
+}
+
+document.addEventListener("click", e => {
+  if (e.target.hasAttribute("data-close")) fermerModales();
+  if (e.target.classList.contains("modal-bg")) fermerModales();
+});
+
+document.getElementById("btn-refresh").onclick = chargerDonnees;
+document.getElementById("btn-export").onclick = exporterPDF;
+document.getElementById("btn-saisie").onclick = () => ouvrirSaisie(null);
+document.getElementById("btn-saisie-submit").onclick = soumettreSaisie;
+
+// ============================================================================
+// UTILS
+// ============================================================================
+function escapeHTML(s) {
+  if (s === null || s === undefined) return "";
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// ============================================================================
+// DÉMARRAGE
+// ============================================================================
+chargerDonnees();
+</script>
+</body>
+</html>
