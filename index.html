@@ -6,16 +6,20 @@
 <title>Cadre de Résultats · PASEA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
 :root {
   --blue:       #1565C0;
   --blue-dark:  #0D47A1;
+  --blue-deep:  #082E5C;
   --blue-soft:  #E3EEF9;
+  --blue-tint:  #F4F8FD;
   --bg:         #F0EEE9;
+  --bg-warm:    #EAE7DF;
   --surface:    #FFFFFF;
+  --surface-2:  #FBFAF7;
   --ink:        #1A1A1A;
   --ink-muted:  #6B6B6B;
   --ink-faint:  #A0A0A0;
@@ -29,134 +33,170 @@
   --red-soft:   #F6E2E1;
   --gold:       #B8965A;
   --gold-soft:  #F4ECD8;
+  --gold-deep:  #8C6A2E;
   --serif:      "Cormorant Garamond", Georgia, serif;
   --sans:       "Jost", -apple-system, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.55; }
-body { padding-bottom: 80px; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 14.5px; line-height: 1.55; }
+body { padding-bottom: 60px; }
 
 a { color: var(--blue); text-decoration: none; }
 button { font-family: var(--sans); cursor: pointer; border: 0; background: none; color: inherit; }
 
-/* ============ HEADER ============ */
+/* ============================================================================
+   HEADER
+   ============================================================================ */
 .topbar {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   position: sticky; top: 0; z-index: 50;
 }
 .topbar-inner {
-  max-width: 1280px; margin: 0 auto;
-  padding: 18px 28px;
+  max-width: 1320px; margin: 0 auto;
+  padding: 14px 28px;
   display: flex; align-items: center; gap: 18px;
 }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand-logo {
-  width: 48px; height: 48px;
-  background: var(--blue);
-  color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif); font-style: italic; font-weight: 500;
-  font-size: 22px;
-  border-radius: 4px;
-  letter-spacing: 0.5px;
-}
-.brand-text { line-height: 1.2; }
-.brand-name { font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--ink); }
-.brand-sub  { font-size: 12px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 1.2px; }
 
-.topbar-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+/* -- Logo PASEA -----------------------------------------------------------
+   POUR REMPLACER PAR LE VRAI LOGO :
+   1) Soit tu mets une image dans le même dossier que ce fichier (logo.png)
+      et tu remplaces le bloc SVG ci-dessous par :
+        <img src="logo.png" alt="PASEA" class="brand-logo-img" />
+   2) Soit tu colles le data:image/...base64 du logo (comme celui qu'on a déjà
+      dans l'outil ANO) dans le src du même <img>.
+   En attendant, l'emblème SVG ci-dessous reprend les motifs du projet
+   (goutte + onde + acronyme) dans la charte PASEA validée.
+---------------------------------------------------------------------------- */
+.brand-logo {
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 2px;
+  background: linear-gradient(155deg, var(--blue) 0%, var(--blue-deep) 100%);
+  flex-shrink: 0;
+}
+.brand-logo svg { width: 30px; height: 30px; }
+.brand-logo-img {
+  width: 46px; height: 46px; object-fit: contain;
+  border-radius: 2px;
+}
+.brand-text { line-height: 1.15; }
+.brand-name {
+  font-family: var(--serif);
+  font-size: 21px; font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.2px;
+}
+.brand-name em { font-style: italic; color: var(--blue); font-weight: 500; }
+.brand-sub  {
+  font-size: 10.5px; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: 1.4px;
+  margin-top: 2px;
+}
+
+.topbar-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 .btn {
-  padding: 9px 16px;
+  padding: 8px 14px;
   border: 1px solid var(--border-strong);
   background: var(--surface);
   color: var(--ink);
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.3px;
-  border-radius: 4px;
+  border-radius: 3px;
   transition: all .15s ease;
+  white-space: nowrap;
 }
 .btn:hover { border-color: var(--blue); color: var(--blue); }
 .btn-primary {
   background: var(--blue); color: #fff; border-color: var(--blue);
 }
 .btn-primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); color: #fff; }
-.btn-small { padding: 6px 12px; font-size: 12px; }
+.btn-ghost { border-color: transparent; padding: 8px 10px; }
+.btn-ghost:hover { background: var(--blue-soft); border-color: transparent; }
+.btn-small { padding: 5px 10px; font-size: 11.5px; }
 
 .periode-tag {
-  font-size: 12px; color: var(--ink-muted);
-  text-transform: uppercase; letter-spacing: 1.5px;
-  padding-right: 14px; border-right: 1px solid var(--border);
+  font-size: 11px; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: 1.4px;
+  padding-right: 12px; border-right: 1px solid var(--border);
 }
-.periode-tag b { color: var(--ink); font-weight: 600; letter-spacing: 0.8px; }
+.periode-tag b { color: var(--ink); font-weight: 600; letter-spacing: 0.7px; }
 
-/* ============ HERO : ODP ============ */
+/* ============================================================================
+   HERO : ODP
+   ============================================================================ */
 .hero {
-  max-width: 1280px; margin: 36px auto 24px;
+  max-width: 1320px; margin: 28px auto 18px;
   padding: 0 28px;
 }
 .odp-card {
-  background: linear-gradient(115deg, #FAFAF7 0%, #FFFFFF 100%);
+  background:
+    radial-gradient(circle at 95% -20%, rgba(21,101,192,0.06) 0%, transparent 50%),
+    linear-gradient(120deg, var(--surface-2) 0%, var(--surface) 70%);
   border: 1px solid var(--border);
-  border-left: 4px solid var(--blue);
-  padding: 28px 36px;
-  border-radius: 4px;
+  border-left: 3px solid var(--blue);
+  padding: 22px 32px;
+  border-radius: 3px;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 36px;
-  align-items: start;
+  gap: 28px;
+  align-items: center;
 }
 .odp-label {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 28px;
+  font-size: 24px;
   color: var(--blue-dark);
   line-height: 1;
+  letter-spacing: 0.5px;
 }
 .odp-text {
   font-family: var(--serif);
-  font-size: 19px;
+  font-size: 17px;
   line-height: 1.5;
   color: var(--ink);
 }
-.odp-text::before { content: "« "; color: var(--blue); font-weight: 500; }
-.odp-text::after  { content: " »"; color: var(--blue); font-weight: 500; }
+.odp-text::before { content: "« "; color: var(--blue); }
+.odp-text::after  { content: " »"; color: var(--blue); }
 
-/* ============ KPI BAND ============ */
+/* ============================================================================
+   KPI BAND
+   ============================================================================ */
 .kpis {
-  max-width: 1280px; margin: 24px auto;
+  max-width: 1320px; margin: 18px auto;
   padding: 0 28px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 12px;
 }
 .kpi {
   background: var(--surface);
   border: 1px solid var(--border);
-  padding: 22px 24px;
-  border-radius: 4px;
+  padding: 16px 20px;
+  border-radius: 3px;
   position: relative;
 }
 .kpi-label {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 1.4px;
   color: var(--ink-muted); font-weight: 500;
 }
 .kpi-value {
   font-family: var(--serif);
-  font-size: 44px;
+  font-size: 38px;
   font-weight: 500;
   line-height: 1;
-  margin-top: 14px;
+  margin-top: 10px;
   font-variant-numeric: tabular-nums;
 }
 .kpi-sub {
-  font-size: 12px; color: var(--ink-muted); margin-top: 6px;
+  font-size: 11.5px; color: var(--ink-muted); margin-top: 4px;
 }
 .kpi .dot {
-  position: absolute; top: 22px; right: 24px;
-  width: 10px; height: 10px; border-radius: 50%;
+  position: absolute; top: 18px; right: 20px;
+  width: 8px; height: 8px; border-radius: 50%;
 }
 .dot-green { background: var(--green); }
 .dot-amber { background: var(--amber); }
@@ -166,37 +206,39 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
 .kpi-amber .kpi-value { color: var(--amber); }
 .kpi-red   .kpi-value { color: var(--red); }
 
-/* ============ FRISE PROJET ============ */
+/* ============================================================================
+   FRISE PROJET
+   ============================================================================ */
 .frise {
-  max-width: 1280px; margin: 32px auto;
+  max-width: 1320px; margin: 22px auto;
   padding: 0 28px;
 }
 .frise-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 24px 32px 28px;
+  border-radius: 3px;
+  padding: 20px 32px 24px;
 }
 .frise-title {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
-  color: var(--ink-muted); font-weight: 500; margin-bottom: 22px;
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 1.4px;
+  color: var(--ink-muted); font-weight: 500; margin-bottom: 18px;
 }
 .frise-track {
   position: relative;
-  height: 6px; background: var(--border);
+  height: 5px; background: var(--border);
   border-radius: 3px;
-  margin: 38px 12px 28px;
+  margin: 32px 12px 24px;
 }
 .frise-fill {
   position: absolute; left: 0; top: 0; bottom: 0;
-  background: var(--blue);
+  background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
   border-radius: 3px;
 }
 .frise-jalon {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 14px; height: 14px;
+  width: 12px; height: 12px;
   background: var(--surface);
   border: 2px solid var(--border-strong);
   border-radius: 50%;
@@ -206,51 +248,53 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
 .frise-jalon.actuel  {
   border-color: var(--amber);
   background: var(--amber);
-  width: 18px; height: 18px;
+  width: 16px; height: 16px;
   box-shadow: 0 0 0 4px var(--amber-soft);
 }
 .frise-jalon-label {
-  position: absolute; top: 22px; transform: translateX(-50%);
-  font-size: 11px; color: var(--ink-muted);
+  position: absolute; top: 18px; transform: translateX(-50%);
+  font-size: 10.5px; color: var(--ink-muted);
   white-space: nowrap;
   text-align: center;
 }
 .frise-jalon-label b {
   display: block;
-  font-size: 13px; color: var(--ink);
+  font-size: 12px; color: var(--ink);
   font-family: var(--serif); font-style: italic; font-weight: 500;
 }
 .frise-jalon-top {
-  position: absolute; bottom: 22px; transform: translateX(-50%);
-  font-size: 11px; color: var(--ink-muted);
+  position: absolute; bottom: 20px; transform: translateX(-50%);
+  font-size: 10px; color: var(--ink-muted);
   text-transform: uppercase; letter-spacing: 1px;
   white-space: nowrap;
 }
 
-/* ============ MODULE PBC/CBP ============ */
+/* ============================================================================
+   MODULE PBC/CBP
+   ============================================================================ */
 .pbc-section {
-  max-width: 1280px; margin: 32px auto;
+  max-width: 1320px; margin: 22px auto;
   padding: 0 28px;
 }
 .pbc-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-top: 3px solid var(--gold);
-  border-radius: 4px;
-  padding: 26px 32px;
+  border-radius: 3px;
+  padding: 20px 28px 22px;
 }
-.pbc-header { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6px; }
+.pbc-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 4px; flex-wrap: wrap; }
 .pbc-title {
-  font-family: var(--serif); font-size: 26px; font-weight: 500;
+  font-family: var(--serif); font-size: 23px; font-weight: 500;
   color: var(--ink);
 }
 .pbc-baseline {
-  font-size: 11px; color: var(--gold);
-  text-transform: uppercase; letter-spacing: 2px; font-weight: 600;
+  font-size: 10.5px; color: var(--gold-deep);
+  text-transform: uppercase; letter-spacing: 1.8px; font-weight: 600;
 }
 .pbc-desc {
-  font-size: 13px; color: var(--ink-muted);
-  margin-bottom: 22px; max-width: 700px;
+  font-size: 12.5px; color: var(--ink-muted);
+  margin-bottom: 16px; max-width: 720px; line-height: 1.5;
 }
 .pbc-table {
   width: 100%; border-collapse: collapse;
@@ -259,57 +303,58 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
   text-align: left;
   font-size: 10px; text-transform: uppercase; letter-spacing: 1.3px;
   color: var(--ink-muted); font-weight: 500;
-  padding: 10px 14px 10px 0;
+  padding: 8px 12px 8px 0;
   border-bottom: 1px solid var(--border);
 }
 .pbc-table td {
-  padding: 16px 14px 16px 0;
+  padding: 12px 12px 12px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 14px;
+  font-size: 13px;
   vertical-align: top;
 }
 .pbc-table tr:last-child td { border-bottom: 0; }
 .pbc-code {
   font-family: var(--sans); font-weight: 600; color: var(--blue);
-  font-size: 13px;
+  font-size: 12.5px;
 }
 .pbc-amount {
   font-family: var(--serif); font-style: italic;
-  font-size: 22px; font-weight: 500;
-  color: var(--gold); white-space: nowrap;
+  font-size: 19px; font-weight: 500;
+  color: var(--gold-deep); white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
-.pbc-table tr:has(.status-vert)   td { background: linear-gradient(90deg, var(--green-soft) 0%, transparent 100%); }
-.pbc-table tr:has(.status-rouge)  td { background: linear-gradient(90deg, var(--red-soft) 0%, transparent 100%); }
 
-/* ============ COMPOSANTES NAV ============ */
+/* ============================================================================
+   COMPOSANTES NAV
+   ============================================================================ */
 .composantes-section {
-  max-width: 1280px; margin: 32px auto;
+  max-width: 1320px; margin: 26px auto;
   padding: 0 28px;
 }
 .section-title {
   font-family: var(--serif);
-  font-size: 32px; font-weight: 500;
+  font-size: 28px; font-weight: 500;
   color: var(--ink);
-  margin-bottom: 20px;
-  display: flex; align-items: baseline; gap: 14px;
+  margin-bottom: 14px;
+  display: flex; align-items: baseline; gap: 12px;
+  flex-wrap: wrap;
 }
 .section-title em { font-style: italic; color: var(--blue); }
 .section-title span {
   font-family: var(--sans);
-  font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1.4px;
   color: var(--ink-muted); font-weight: 500;
 }
 
 .tabs {
-  display: flex; gap: 4px;
+  display: flex; gap: 2px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 28px;
+  margin-bottom: 18px;
   overflow-x: auto;
 }
 .tab {
-  padding: 12px 18px;
-  font-size: 13px;
+  padding: 10px 16px;
+  font-size: 12.5px;
   color: var(--ink-muted);
   border-bottom: 2px solid transparent;
   font-weight: 500;
@@ -320,74 +365,78 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
 .tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
 .tab-count {
   display: inline-block;
-  margin-left: 8px;
-  padding: 1px 8px;
-  font-size: 11px;
+  margin-left: 6px;
+  padding: 1px 7px;
+  font-size: 10.5px;
   background: var(--bg); border-radius: 10px;
   color: var(--ink-muted);
 }
 .tab.active .tab-count { background: var(--blue-soft); color: var(--blue); }
 
-/* ============ FICHE INDICATEUR ============ */
+/* ============================================================================
+   FICHE INDICATEUR — version compacte
+   ============================================================================ */
 .indicateurs-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 8px;
 }
 .fiche {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 22px 26px;
+  border-radius: 3px;
+  padding: 12px 18px;
   display: grid;
-  grid-template-columns: 100px 1fr 220px 160px;
-  gap: 24px;
+  grid-template-columns: 78px minmax(0, 1fr) 200px 130px;
+  gap: 18px;
   align-items: center;
-  transition: border-color .15s ease;
+  transition: border-color .15s ease, background .15s ease;
+  cursor: pointer;
 }
-.fiche:hover { border-color: var(--border-strong); }
+.fiche:hover { border-color: var(--blue); background: var(--blue-tint); }
 .fiche.sub {
-  margin-left: 38px;
-  padding: 14px 22px;
-  background: #FBFAF8;
+  margin-left: 32px;
+  padding: 8px 16px;
+  background: var(--surface-2);
   border-style: dashed;
 }
+.fiche.sub:hover { background: var(--blue-tint); }
 
 .fiche-code {
-  font-size: 12px; font-weight: 600;
+  font-size: 11.5px; font-weight: 600;
   color: var(--blue);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   font-variant-numeric: tabular-nums;
 }
-.fiche-code-sub { font-size: 11px; color: var(--ink-muted); margin-top: 4px; font-weight: 400; letter-spacing: 0; }
+.fiche-code-sub { font-size: 10px; color: var(--ink-muted); margin-top: 2px; font-weight: 400; letter-spacing: 0; }
 
 .fiche-body { min-width: 0; }
 .fiche-titre {
-  font-size: 14px; color: var(--ink);
-  line-height: 1.4;
+  font-size: 13px; color: var(--ink);
+  line-height: 1.35;
   font-weight: 500;
 }
-.fiche-sub .fiche-titre { font-size: 13px; color: var(--ink-muted); }
-.fiche-badges { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+.fiche-sub .fiche-titre { font-size: 12.5px; color: var(--ink-muted); }
+.fiche-badges { margin-top: 5px; display: flex; gap: 4px; flex-wrap: wrap; }
 
 .badge {
   display: inline-block;
-  font-size: 10px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 1px;
-  padding: 3px 8px;
+  font-size: 9.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.9px;
+  padding: 2px 7px;
   border-radius: 2px;
   border: 1px solid;
 }
 .badge-iri  { color: var(--blue); border-color: var(--blue-soft); background: var(--blue-soft); }
-.badge-cbp  { color: var(--gold); border-color: var(--gold-soft); background: var(--gold-soft); }
+.badge-cbp  { color: var(--gold-deep); border-color: var(--gold-soft); background: var(--gold-soft); }
 .badge-smr  { color: var(--blue-dark); border-color: var(--blue-soft); background: var(--surface); }
 .badge-na   { color: var(--ink-muted); border-color: var(--border); background: var(--bg); }
 
 /* Progress */
-.fiche-progress { display: flex; flex-direction: column; gap: 6px; }
+.fiche-progress { display: flex; flex-direction: column; gap: 4px; }
 .progress-track {
   position: relative;
-  height: 6px; background: var(--border);
+  height: 5px; background: var(--border);
   border-radius: 3px;
 }
 .progress-fill {
@@ -401,28 +450,28 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
 .progress-fill.gris  { background: var(--ink-faint); }
 .progress-target {
   position: absolute; top: -3px;
-  width: 2px; height: 12px;
+  width: 2px; height: 11px;
   background: var(--ink);
 }
 .progress-meta {
   display: flex; justify-content: space-between;
-  font-size: 11px; color: var(--ink-muted);
+  font-size: 10.5px; color: var(--ink-muted);
   font-variant-numeric: tabular-nums;
 }
 .progress-meta b { color: var(--ink); font-weight: 600; }
 
 /* Status pill */
-.fiche-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.fiche-status { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
 .status-pill {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 11px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 1px;
-  padding: 5px 11px;
-  border-radius: 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.9px;
+  padding: 3px 9px;
+  border-radius: 11px;
   white-space: nowrap;
 }
 .status-pill::before {
-  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
 }
 .status-vert  { background: var(--green-soft); color: var(--green); }
 .status-vert::before  { background: var(--green); }
@@ -434,22 +483,122 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
 .status-neutre::before{ background: var(--ink-faint); }
 
 .btn-details {
-  font-size: 11px; color: var(--blue);
-  text-transform: uppercase; letter-spacing: 1px;
+  font-size: 10px; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.9px;
   font-weight: 500;
 }
 .btn-details:hover { text-decoration: underline; }
 
 /* Tendance (trajectoire) */
 .trajectoire {
-  font-size: 11px; color: var(--ink-muted);
+  font-size: 10.5px; color: var(--ink-muted);
   font-variant-numeric: tabular-nums;
 }
 .trajectoire b { color: var(--ink); font-weight: 600; }
 .trajectoire.alerte b { color: var(--red); }
 .trajectoire.bon b    { color: var(--green); }
 
-/* ============ MODAL ============ */
+/* ============================================================================
+   THÉORIE DU CHANGEMENT
+   ============================================================================ */
+.toc-section {
+  max-width: 1320px; margin: 26px auto;
+  padding: 0 28px;
+}
+.toc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 24px 32px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.toc-card::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--blue) 50%, var(--green) 100%);
+}
+.toc-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px; margin-bottom: 6px;
+}
+.toc-title {
+  font-family: var(--serif); font-size: 24px; font-weight: 500;
+}
+.toc-desc {
+  font-size: 12.5px; color: var(--ink-muted);
+  margin-bottom: 22px; max-width: 760px; line-height: 1.5;
+}
+.toc-chain {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  position: relative;
+}
+.toc-level {
+  position: relative;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  margin-bottom: 32px;
+}
+.toc-level:last-child { margin-bottom: 0; }
+.toc-level:not(:last-child)::after {
+  content: "↑";
+  position: absolute;
+  bottom: -28px; left: 50%; transform: translateX(-50%);
+  font-size: 22px;
+  color: var(--blue);
+  font-weight: 300;
+  line-height: 1;
+}
+.toc-level-head {
+  display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px;
+}
+.toc-level-num {
+  font-family: var(--serif); font-style: italic;
+  font-size: 26px; color: var(--blue-dark);
+  line-height: 1;
+}
+.toc-level-titre {
+  font-family: var(--serif); font-size: 17px; font-weight: 500;
+  color: var(--ink);
+}
+.toc-level-sub {
+  font-size: 10.5px; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: 1.2px;
+  margin-left: auto;
+}
+.toc-items {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.toc-item {
+  font-size: 11.5px;
+  padding: 4px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--ink);
+  display: inline-flex; align-items: center; gap: 6px;
+  cursor: pointer;
+}
+.toc-item:hover { border-color: var(--blue); color: var(--blue); }
+.toc-item .toc-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+}
+.toc-item.vert  .toc-dot { background: var(--green); }
+.toc-item.orange .toc-dot { background: var(--amber); }
+.toc-item.rouge .toc-dot { background: var(--red); }
+.toc-item.neutre .toc-dot { background: var(--ink-faint); }
+
+.toc-level.lvl-odp     { border-left: 3px solid var(--blue);  background: linear-gradient(90deg, var(--blue-tint) 0%, var(--surface) 100%); }
+.toc-level.lvl-outcome { border-left: 3px solid var(--gold); }
+.toc-level.lvl-output  { border-left: 3px solid var(--green); }
+
+/* ============================================================================
+   MODAL
+   ============================================================================ */
 .modal-bg {
   display: none;
   position: fixed; inset: 0;
@@ -457,87 +606,88 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
   z-index: 100;
   align-items: flex-start; justify-content: center;
   overflow-y: auto;
-  padding: 40px 20px;
+  padding: 36px 20px;
 }
 .modal-bg.show { display: flex; }
 .modal {
   background: var(--surface);
   width: 100%; max-width: 920px;
-  border-radius: 4px;
-  padding: 36px 44px;
+  border-radius: 3px;
+  padding: 32px 40px;
   box-shadow: 0 24px 60px rgba(0,0,0,.18);
   position: relative;
 }
 .modal-close {
-  position: absolute; top: 18px; right: 22px;
-  font-size: 24px; color: var(--ink-muted);
-  width: 36px; height: 36px;
+  position: absolute; top: 16px; right: 20px;
+  font-size: 22px; color: var(--ink-muted);
+  width: 32px; height: 32px;
   line-height: 1;
 }
 .modal-close:hover { color: var(--ink); }
 .modal-eyebrow {
-  font-size: 11px; color: var(--blue);
-  text-transform: uppercase; letter-spacing: 1.8px;
-  font-weight: 600; margin-bottom: 8px;
+  font-size: 10.5px; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 1.6px;
+  font-weight: 600; margin-bottom: 6px;
 }
 .modal-titre {
   font-family: var(--serif);
-  font-size: 28px; font-weight: 500;
+  font-size: 26px; font-weight: 500;
   line-height: 1.25;
   color: var(--ink);
   margin-bottom: 6px;
 }
-.modal-unite { font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; }
+.modal-unite { font-size: 12.5px; color: var(--ink-muted); margin-bottom: 20px; }
 
 .modal-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 28px;
+  gap: 12px;
+  margin-bottom: 22px;
 }
 .cell {
   border: 1px solid var(--border);
-  background: #FBFAF8;
-  border-radius: 4px;
-  padding: 14px 16px;
+  background: var(--surface-2);
+  border-radius: 3px;
+  padding: 12px 14px;
 }
 .cell-label {
-  font-size: 10px; text-transform: uppercase; letter-spacing: 1.3px;
+  font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.2px;
   color: var(--ink-muted); font-weight: 500;
 }
 .cell-value {
   font-family: var(--serif);
-  font-size: 22px; font-weight: 500;
-  margin-top: 6px;
+  font-size: 20px; font-weight: 500;
+  margin-top: 4px;
   font-variant-numeric: tabular-nums;
 }
 
 .modal-section {
-  margin-top: 24px;
-  padding-top: 24px;
+  margin-top: 20px;
+  padding-top: 20px;
   border-top: 1px solid var(--border);
 }
 .modal-section h4 {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 1.4px;
   color: var(--ink-muted); font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .modal-section p {
-  font-size: 14px; line-height: 1.6; color: var(--ink);
+  font-size: 13.5px; line-height: 1.6; color: var(--ink);
 }
 
 .dl-grid {
   display: grid;
   grid-template-columns: 180px 1fr;
-  gap: 10px 24px;
-  font-size: 13px;
+  gap: 8px 22px;
+  font-size: 12.5px;
 }
 .dl-grid dt { color: var(--ink-muted); }
 .dl-grid dd { color: var(--ink); }
 
 .modal-actions {
-  margin-top: 28px;
-  display: flex; gap: 10px;
+  margin-top: 24px;
+  display: flex; gap: 8px;
+  flex-wrap: wrap;
 }
 
 /* Trajectoire bloc dans modal */
@@ -545,70 +695,126 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
   background: linear-gradient(135deg, var(--blue-soft) 0%, #fff 100%);
   border: 1px solid var(--border);
   border-left: 3px solid var(--blue);
-  padding: 18px 22px;
-  border-radius: 4px;
+  padding: 16px 20px;
+  border-radius: 3px;
 }
 .traj-box.alerte { border-left-color: var(--red); background: linear-gradient(135deg, var(--red-soft) 0%, #fff 100%); }
 .traj-box.bon    { border-left-color: var(--green); background: linear-gradient(135deg, var(--green-soft) 0%, #fff 100%); }
-.traj-titre { font-size: 12px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 1.3px; }
+.traj-titre { font-size: 11px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 1.2px; }
 .traj-valeur {
   font-family: var(--serif);
-  font-size: 30px; font-weight: 500;
-  margin: 6px 0;
+  font-size: 27px; font-weight: 500;
+  margin: 5px 0;
   font-variant-numeric: tabular-nums;
 }
-.traj-detail { font-size: 13px; color: var(--ink-muted); }
+.traj-detail { font-size: 12.5px; color: var(--ink-muted); }
 
-/* ============ FORMULAIRE SAISIE ============ */
-.form-group { margin-bottom: 16px; }
+/* ============================================================================
+   FORMULAIRE SAISIE
+   ============================================================================ */
+.form-group { margin-bottom: 14px; }
 .form-group label {
   display: block;
-  font-size: 12px; text-transform: uppercase; letter-spacing: 1.3px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px;
   color: var(--ink-muted); font-weight: 500;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 9px 11px;
   border: 1px solid var(--border-strong);
   background: var(--surface);
-  font-family: var(--sans); font-size: 14px;
+  font-family: var(--sans); font-size: 13.5px;
   color: var(--ink);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none; border-color: var(--blue);
 }
-.form-group textarea { resize: vertical; min-height: 80px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group textarea { resize: vertical; min-height: 72px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
 .feedback {
-  padding: 12px 14px;
-  font-size: 13px;
-  border-radius: 4px;
-  margin-top: 14px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  border-radius: 3px;
+  margin-top: 12px;
 }
 .feedback.ok   { background: var(--green-soft); color: var(--green); }
 .feedback.err  { background: var(--red-soft);   color: var(--red); }
 
-/* ============ FOOTER ============ */
+/* ============================================================================
+   MODAL ISR
+   ============================================================================ */
+.isr-output {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 20px 24px;
+  margin-top: 16px;
+  font-family: Georgia, serif;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  max-height: 60vh;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+.isr-output h3 {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--blue-dark);
+  margin: 16px 0 8px;
+  letter-spacing: 0.2px;
+}
+.isr-output h3:first-child { margin-top: 0; }
+.isr-output h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--ink-muted);
+  font-weight: 600;
+  margin: 12px 0 6px;
+}
+.isr-output p { margin-bottom: 10px; }
+.isr-output .rating {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-family: var(--sans);
+  font-size: 12px;
+  margin-left: 6px;
+}
+.isr-output .rating-S  { background: var(--green-soft); color: var(--green); }
+.isr-output .rating-MS { background: var(--blue-soft);  color: var(--blue); }
+.isr-output .rating-MU { background: var(--amber-soft); color: var(--amber); }
+.isr-output .rating-U  { background: var(--red-soft);   color: var(--red); }
+
+/* ============================================================================
+   FOOTER
+   ============================================================================ */
 .footer {
   position: fixed; bottom: 0; left: 0; right: 0;
   background: var(--surface);
   border-top: 1px solid var(--border);
-  padding: 12px 28px;
-  font-size: 11px;
+  padding: 10px 28px;
+  font-size: 10.5px;
   color: var(--ink-muted);
   text-align: center;
   letter-spacing: 0.4px;
 }
 .footer b { color: var(--ink); font-weight: 600; }
 
-/* ============ LOADER ============ */
+/* ============================================================================
+   LOADER
+   ============================================================================ */
 .loader {
   text-align: center;
   padding: 80px 20px;
@@ -627,24 +833,244 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
   60%, 100% { content: "..."; }
 }
 
-/* ============ RESPONSIVE ============ */
-@media (max-width: 1000px) {
+/* ============================================================================
+   MODE COPIL — présentation plein écran
+   ============================================================================ */
+body.copil-mode { background: #0A1929; color: #F5F1E8; padding-bottom: 0; }
+body.copil-mode .topbar,
+body.copil-mode .footer,
+body.copil-mode .hero,
+body.copil-mode .kpis,
+body.copil-mode .frise,
+body.copil-mode .pbc-section,
+body.copil-mode .toc-section,
+body.copil-mode .composantes-section { display: none; }
+body.copil-mode #copil-stage { display: flex; }
+
+#copil-stage {
+  display: none;
+  position: fixed; inset: 0;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(21,101,192,0.25) 0%, transparent 40%),
+    radial-gradient(circle at 10% 80%, rgba(184,150,90,0.18) 0%, transparent 40%),
+    linear-gradient(160deg, #0A1929 0%, #061321 100%);
+  z-index: 200;
+}
+.copil-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.copil-brand {
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--serif);
+  font-size: 19px;
+  color: #F5F1E8;
+}
+.copil-brand .copil-logo {
+  width: 38px; height: 38px;
+  background: linear-gradient(155deg, var(--blue) 0%, var(--blue-deep) 100%);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+}
+.copil-brand .copil-logo svg { width: 24px; height: 24px; }
+.copil-meta {
+  font-size: 11px;
+  color: rgba(245,241,232,0.55);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.copil-meta b { color: #F5F1E8; font-weight: 600; }
+.copil-exit {
+  font-size: 11.5px;
+  color: rgba(245,241,232,0.7);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 6px 14px;
+  border: 1px solid rgba(245,241,232,0.2);
+  border-radius: 3px;
+}
+.copil-exit:hover { color: #fff; border-color: rgba(245,241,232,0.5); }
+
+#copil-slide {
+  flex: 1;
+  overflow-y: auto;
+  padding: 36px 60px;
+}
+.copil-slide-eyebrow {
+  font-size: 11.5px; color: rgba(255,255,255,0.55);
+  text-transform: uppercase; letter-spacing: 2.5px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.copil-slide-titre {
+  font-family: var(--serif);
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 1.05;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+}
+.copil-slide-titre em { font-style: italic; color: #B8965A; font-weight: 500; }
+.copil-slide-sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: rgba(245,241,232,0.65);
+  margin-bottom: 36px;
+}
+
+.copil-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-bottom: 30px;
+}
+.copil-kpi {
+  border-left: 2px solid rgba(255,255,255,0.15);
+  padding: 6px 0 6px 24px;
+}
+.copil-kpi.vert  { border-left-color: #4FB97D; }
+.copil-kpi.amber { border-left-color: #DEA755; }
+.copil-kpi.rouge { border-left-color: #D86A6A; }
+.copil-kpi-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: rgba(245,241,232,0.55);
+  margin-bottom: 8px;
+}
+.copil-kpi-value {
+  font-family: var(--serif);
+  font-size: 72px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+}
+.copil-kpi-sub {
+  font-size: 13px;
+  color: rgba(245,241,232,0.5);
+  margin-top: 6px;
+}
+.copil-quote {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-style: italic;
+  line-height: 1.45;
+  color: #F5F1E8;
+  padding: 22px 30px;
+  border-left: 3px solid #B8965A;
+  background: rgba(255,255,255,0.03);
+  border-radius: 0 3px 3px 0;
+  max-width: 1100px;
+}
+
+.copil-indicateurs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.copil-ind {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px 20px;
+  border-radius: 3px;
+}
+.copil-ind-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 8px; gap: 12px;
+}
+.copil-ind-code {
+  font-size: 11px; font-weight: 600;
+  color: #6FA8DD;
+  letter-spacing: 0.5px;
+}
+.copil-ind-titre {
+  font-size: 14px;
+  color: #F5F1E8;
+  line-height: 1.35;
+  margin-bottom: 12px;
+  min-height: 38px;
+}
+.copil-ind-bar {
+  height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;
+  margin-bottom: 8px; position: relative;
+}
+.copil-ind-bar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; }
+.copil-ind-bar .fill.vert  { background: #4FB97D; }
+.copil-ind-bar .fill.orange{ background: #DEA755; }
+.copil-ind-bar .fill.rouge { background: #D86A6A; }
+.copil-ind-bar .fill.gris  { background: rgba(255,255,255,0.3); }
+.copil-ind-meta {
+  font-size: 11.5px;
+  color: rgba(245,241,232,0.55);
+  display: flex; justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+}
+
+.copil-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 40px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.copil-nav-counter {
+  font-family: var(--serif); font-style: italic;
+  font-size: 17px;
+  color: rgba(245,241,232,0.7);
+}
+.copil-nav-counter b { color: #fff; font-weight: 500; font-size: 22px; }
+.copil-nav-buttons { display: flex; gap: 10px; }
+.copil-nav-btn {
+  padding: 10px 22px;
+  background: rgba(255,255,255,0.06);
+  color: #F5F1E8;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+.copil-nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.12); }
+.copil-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.copil-pager-dots {
+  display: flex; gap: 6px; align-items: center;
+  margin: 0 18px;
+}
+.copil-pager-dots .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  cursor: pointer;
+}
+.copil-pager-dots .dot.active { background: #B8965A; width: 24px; border-radius: 4px; }
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+@media (max-width: 1100px) {
   .kpis { grid-template-columns: repeat(2, 1fr); }
-  .fiche { grid-template-columns: 80px 1fr; }
+  .fiche { grid-template-columns: 70px 1fr; }
   .fiche-progress, .fiche-status { grid-column: 1 / -1; align-items: flex-start; }
   .fiche-status { flex-direction: row; justify-content: space-between; align-items: center; }
   .modal-grid { grid-template-columns: repeat(2, 1fr); }
   .dl-grid { grid-template-columns: 1fr; gap: 2px 0; }
-  .dl-grid dd { margin-bottom: 10px; }
-  .odp-card { grid-template-columns: 1fr; gap: 12px; }
-  .odp-label { font-size: 22px; }
+  .dl-grid dd { margin-bottom: 8px; }
+  .odp-card { grid-template-columns: 1fr; gap: 10px; }
+  .odp-label { font-size: 20px; }
+  .copil-kpis { grid-template-columns: repeat(2, 1fr); }
+  .copil-indicateurs { grid-template-columns: 1fr; }
+  .copil-slide-titre { font-size: 38px; }
+  #copil-slide { padding: 24px 28px; }
 }
 
-/* ============ PRINT ============ */
+/* ============================================================================
+   PRINT
+   ============================================================================ */
 @media print {
-  .topbar, .footer, .btn, .modal-bg, .tabs { display: none !important; }
+  .topbar, .footer, .btn, .modal-bg, .tabs, #copil-stage { display: none !important; }
   body { background: #fff; padding: 0; }
-  .fiche, .kpi, .odp-card, .frise-card, .pbc-card { break-inside: avoid; box-shadow: none; }
+  .fiche, .kpi, .odp-card, .frise-card, .pbc-card, .toc-card { break-inside: avoid; box-shadow: none; }
 }
 </style>
 </head>
@@ -653,15 +1079,27 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <div class="brand-logo">P</div>
+      <!-- ===== LOGO PASEA — voir bloc d'instructions dans le CSS ===== -->
+      <div class="brand-logo" id="brand-logo">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-label="PASEA">
+          <!-- Goutte d'eau stylisée, motif du projet -->
+          <path d="M30 8 C 30 8, 14 26, 14 38 C 14 47, 21 53, 30 53 C 39 53, 46 47, 46 38 C 46 26, 30 8, 30 8 Z"
+                fill="none" stroke="#F5F1E8" stroke-width="1.6" stroke-linejoin="round" />
+          <!-- Ondes intérieures -->
+          <path d="M19 38 Q 24 35, 30 38 T 41 38" fill="none" stroke="#F5F1E8" stroke-width="1.4" stroke-linecap="round" opacity="0.85"/>
+          <path d="M21 43 Q 26 40, 30 43 T 39 43" fill="none" stroke="#F5F1E8" stroke-width="1.2" stroke-linecap="round" opacity="0.55"/>
+        </svg>
+      </div>
       <div class="brand-text">
-        <div class="brand-name">Cadre de Résultats</div>
+        <div class="brand-name"><em>Cadre</em> de Résultats</div>
         <div class="brand-sub">UC-PASEA · Crédit IDA N° 7562-CI</div>
       </div>
     </div>
     <div class="topbar-actions">
       <div class="periode-tag">Période <b id="periode-label">…</b></div>
       <button class="btn" id="btn-refresh">Actualiser</button>
+      <button class="btn" id="btn-isr">Rapport ISR</button>
+      <button class="btn" id="btn-copil">Mode COPIL</button>
       <button class="btn" id="btn-export">Exporter PDF</button>
       <button class="btn btn-primary" id="btn-saisie">Saisir une valeur</button>
     </div>
@@ -673,10 +1111,10 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
 </main>
 
 <footer class="footer">
-  Développé par <b>J. MESSOUM</b> · Assistant Suivi-Évaluation · UC-PASEA &copy; 2026
+  Développé par <b>M.J</b> · Cellule Suivi-Évaluation · UC-PASEA &copy; 2026
 </footer>
 
-<!-- Modal détail indicateur -->
+<!-- ====================== MODAL DÉTAIL INDICATEUR ====================== -->
 <div class="modal-bg" id="modal-detail">
   <div class="modal" id="modal-detail-content">
     <button class="modal-close" data-close>&times;</button>
@@ -684,12 +1122,12 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
   </div>
 </div>
 
-<!-- Modal saisie -->
+<!-- ====================== MODAL SAISIE ====================== -->
 <div class="modal-bg" id="modal-saisie">
   <div class="modal" style="max-width: 560px;">
     <button class="modal-close" data-close>&times;</button>
     <div class="modal-eyebrow">Mise à jour d'une valeur</div>
-    <div class="modal-titre" style="margin-bottom: 22px;">Saisir une nouvelle valeur</div>
+    <div class="modal-titre" style="margin-bottom: 20px;">Saisir une nouvelle valeur</div>
 
     <div class="form-group">
       <label>Indicateur</label>
@@ -711,7 +1149,7 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
     </div>
     <div class="form-group">
       <label>Saisi par</label>
-      <input type="text" id="saisie-user" value="J. MESSOUM" />
+      <input type="text" id="saisie-user" value="M.J" />
     </div>
 
     <div class="modal-actions">
@@ -719,6 +1157,54 @@ button { font-family: var(--sans); cursor: pointer; border: 0; background: none;
       <button class="btn" data-close>Annuler</button>
     </div>
     <div id="saisie-feedback"></div>
+  </div>
+</div>
+
+<!-- ====================== MODAL RAPPORT ISR ====================== -->
+<div class="modal-bg" id="modal-isr">
+  <div class="modal" style="max-width: 980px;">
+    <button class="modal-close" data-close>&times;</button>
+    <div class="modal-eyebrow">Implementation Status Report</div>
+    <div class="modal-titre">Rapport ISR — projet de note</div>
+    <p style="font-size: 12.5px; color: var(--ink-muted); margin-bottom: 16px;">
+      Note rédigée à partir des données actuelles du cadre de résultats, au format
+      Implementation Status &amp; Results Report de la Banque mondiale. À relire, ajuster et compléter avant transmission.
+    </p>
+    <div class="modal-actions" style="margin-top: 0; margin-bottom: 4px;">
+      <button class="btn btn-primary" id="btn-isr-copy">Copier le texte</button>
+      <button class="btn" id="btn-isr-word">Télécharger en .doc</button>
+      <button class="btn" data-close>Fermer</button>
+      <span id="isr-feedback" style="margin-left: 10px; font-size: 12px; color: var(--green); align-self: center;"></span>
+    </div>
+    <div class="isr-output" id="isr-output"></div>
+  </div>
+</div>
+
+<!-- ====================== STAGE MODE COPIL ====================== -->
+<div id="copil-stage">
+  <div class="copil-header">
+    <div class="copil-brand">
+      <div class="copil-logo">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 8 C 30 8, 14 26, 14 38 C 14 47, 21 53, 30 53 C 39 53, 46 47, 46 38 C 46 26, 30 8, 30 8 Z"
+                fill="none" stroke="#F5F1E8" stroke-width="1.6" stroke-linejoin="round" />
+          <path d="M19 38 Q 24 35, 30 38 T 41 38" fill="none" stroke="#F5F1E8" stroke-width="1.4" stroke-linecap="round" opacity="0.85"/>
+          <path d="M21 43 Q 26 40, 30 43 T 39 43" fill="none" stroke="#F5F1E8" stroke-width="1.2" stroke-linecap="round" opacity="0.55"/>
+        </svg>
+      </div>
+      <div>Cadre de Résultats <em style="opacity: 0.55; font-size: 14px;">PASEA · UC</em></div>
+    </div>
+    <div class="copil-meta">Période <b id="copil-periode">—</b></div>
+    <button class="copil-exit" id="btn-copil-exit">Quitter (Échap)</button>
+  </div>
+  <div id="copil-slide"></div>
+  <div class="copil-nav">
+    <div class="copil-nav-counter">Slide <b id="copil-current">1</b> / <span id="copil-total">—</span></div>
+    <div class="copil-pager-dots" id="copil-dots"></div>
+    <div class="copil-nav-buttons">
+      <button class="copil-nav-btn" id="btn-copil-prev">← Précédent</button>
+      <button class="copil-nav-btn" id="btn-copil-next">Suivant →</button>
+    </div>
   </div>
 </div>
 
@@ -860,12 +1346,14 @@ function fmtDate(iso) {
 function rendreInterface() {
   const main = document.getElementById("main");
   document.getElementById("periode-label").textContent = DATA.config.periode_actuelle || "—";
+  document.getElementById("copil-periode").textContent = DATA.config.periode_actuelle || "—";
 
   let html = "";
   html += rendreHero();
   html += rendreKPIs();
   html += rendreFrise();
   html += rendrePBC();
+  html += rendreToC();
   html += rendreComposantes();
   main.innerHTML = html;
 
@@ -894,7 +1382,6 @@ function rendreKPIs() {
     else if (rag === "rouge") r++;
     else n++;
   });
-  const sante = total > 0 ? Math.round((v / total) * 100) : 0;
 
   return `
     <section class="kpis">
@@ -1005,6 +1492,76 @@ function rendrePBC() {
   `;
 }
 
+// ============================================================================
+// THÉORIE DU CHANGEMENT
+// On hiérarchise les indicateurs sur 3 niveaux :
+//   - Niveau 1 (haut) : ODP — l'objectif de développement
+//   - Niveau 2 : Outcomes/Résultats — Composante 1 (alimentation en eau) + Composante 2 (assainissement)
+//   - Niveau 3 (bas) : Outputs/Produits — Composante 3 (renforcement institutionnel) + Composante 4 (gestion) + CERC
+// ============================================================================
+function rendreToC() {
+  // On part des indicateurs réels et on les classe
+  const odpInd = DATA.indicateurs.filter(i => i.Niveau === "ODP" && !i.Parent_Code);
+  const outcomeInd = DATA.indicateurs.filter(i =>
+    i.Niveau !== "ODP" && !i.Parent_Code && (String(i.Composante) === "1" || String(i.Composante) === "2"));
+  const outputInd = DATA.indicateurs.filter(i =>
+    i.Niveau !== "ODP" && !i.Parent_Code && (String(i.Composante) === "3" || String(i.Composante) === "4" || i.Type === "na"));
+
+  if (!odpInd.length && !outcomeInd.length && !outputInd.length) return "";
+
+  const renderItem = ind => {
+    const rag = calculRAG(ind, DATA.config);
+    return `<span class="toc-item ${rag}" data-detail="${ind.Code}" title="${escapeHTML(ind.Indicateur)}">
+      <span class="toc-dot"></span>${ind.Code}
+    </span>`;
+  };
+
+  return `
+    <section class="toc-section">
+      <div class="toc-card">
+        <div class="toc-head">
+          <h2 class="toc-title">Théorie du changement</h2>
+          <span class="copil-slide-eyebrow" style="color: var(--ink-muted); letter-spacing: 1.4px; font-size: 10.5px;">chaîne causale</span>
+        </div>
+        <p class="toc-desc">
+          Lecture verticale de bas en haut. Les <b>produits</b> (activités, renforcement institutionnel, gouvernance)
+          alimentent les <b>résultats intermédiaires</b> (services d'eau et d'assainissement) qui contribuent à l'atteinte
+          de l'<b>Objectif de Développement du Projet</b>. Les pastilles donnent l'état actuel des indicateurs associés.
+        </p>
+
+        <div class="toc-chain">
+          <div class="toc-level lvl-odp">
+            <div class="toc-level-head">
+              <span class="toc-level-num">01</span>
+              <span class="toc-level-titre">Objectif de Développement du Projet</span>
+              <span class="toc-level-sub">${odpInd.length} indicateurs ODP</span>
+            </div>
+            <div class="toc-items">${odpInd.map(renderItem).join("")}</div>
+          </div>
+
+          <div class="toc-level lvl-outcome">
+            <div class="toc-level-head">
+              <span class="toc-level-num">02</span>
+              <span class="toc-level-titre">Résultats intermédiaires (Outcomes)</span>
+              <span class="toc-level-sub">accès aux services d'eau et d'assainissement</span>
+            </div>
+            <div class="toc-items">${outcomeInd.map(renderItem).join("")}</div>
+          </div>
+
+          <div class="toc-level lvl-output">
+            <div class="toc-level-head">
+              <span class="toc-level-num">03</span>
+              <span class="toc-level-titre">Produits et renforcement (Outputs)</span>
+              <span class="toc-level-sub">institutionnel, gouvernance, contingence</span>
+            </div>
+            <div class="toc-items">${outputInd.map(renderItem).join("")}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 function rendreComposantes() {
   const groupes = {};
   DATA.indicateurs.forEach(ind => {
@@ -1025,7 +1582,6 @@ function rendreComposantes() {
     </button>`;
 
     let fiches = "";
-    // On affiche d'abord les indicateurs parents, puis leurs sous-indicateurs juste après
     const parents = g.items.filter(i => !i.Parent_Code);
     parents.forEach(p => {
       fiches += rendreFiche(p, false);
@@ -1073,7 +1629,6 @@ function rendreFiche(ind, isSub) {
   if (ind.Marqueur_BM === "CBP")     badges += '<span class="badge badge-cbp">CBP</span>';
   if (ind.Type === "na")             badges += '<span class="badge badge-na">CERC</span>';
 
-  // Trajectoire en mini
   const traj = trajectoirePrediction(ind, DATA.config);
   let trajLine = "";
   if (traj && ind.Type === "numerique") {
@@ -1134,7 +1689,6 @@ function ouvrirDetail(code) {
   if (!ind) return;
   const rag = calculRAG(ind, DATA.config);
   const traj = trajectoirePrediction(ind, DATA.config);
-  const p = calculProgression(ind);
 
   let badges = "";
   if (ind.Marqueur_BM === "IRI")     badges += '<span class="badge badge-iri">IRI</span> ';
@@ -1155,7 +1709,7 @@ function ouvrirDetail(code) {
             Cible : ${fmt(traj.cible, ind.Unite)} · Écart projeté : <b>${ecartTxt}</b>
           </div>
         </div>
-        <p style="font-size: 12px; color: var(--ink-muted); margin-top: 10px; font-style: italic;">
+        <p style="font-size: 11.5px; color: var(--ink-muted); margin-top: 8px; font-style: italic;">
           Projection linéaire à partir du rythme observé entre la valeur de référence et la valeur actuelle.
           Elle suppose un maintien de la même progression jusqu'à la clôture.
         </p>
@@ -1166,8 +1720,8 @@ function ouvrirDetail(code) {
   const cbpHTML = (ind.Marqueur_BM === "CBP" && num(ind.Montant_CBP_USD)) ? `
     <div class="modal-section">
       <h4>Conditions Basées sur la Performance</h4>
-      <p style="font-size: 14px;">
-        Cet indicateur conditionne le décaissement de <b style="font-family: var(--serif); font-size: 22px; color: var(--gold); font-style: italic;">${fmtUsd(num(ind.Montant_CBP_USD))}</b> par la Banque mondiale.
+      <p style="font-size: 13.5px;">
+        Cet indicateur conditionne le décaissement de <b style="font-family: var(--serif); font-size: 20px; color: var(--gold-deep); font-style: italic;">${fmtUsd(num(ind.Montant_CBP_USD))}</b> par la Banque mondiale.
       </p>
     </div>
   ` : "";
@@ -1175,7 +1729,7 @@ function ouvrirDetail(code) {
   const body = `
     <div class="modal-eyebrow">${ind.Code} · ${ind.Composante_Nom}</div>
     <div class="modal-titre">${escapeHTML(ind.Indicateur)}</div>
-    <div class="modal-unite">Unité : ${ind.Unite} · ${badges} <span class="status-pill status-${rag}" style="margin-left: 8px;">${labelRAG(rag)}</span></div>
+    <div class="modal-unite">Unité : ${ind.Unite} · ${badges} <span class="status-pill status-${rag}" style="margin-left: 6px;">${labelRAG(rag)}</span></div>
 
     <div class="modal-grid">
       <div class="cell"><div class="cell-label">Référence ${ind.Date_Reference || ""}</div><div class="cell-value">${fmt(ind.Valeur_Reference, ind.Unite)}</div></div>
@@ -1270,6 +1824,391 @@ function formatPeriodeJS(d) {
 }
 
 // ============================================================================
+// GÉNÉRATION RAPPORT ISR (Implementation Status & Results Report — format BM)
+// ============================================================================
+function noteISR(rag) {
+  // Mappage RAG vers la notation officielle de l'ISR Banque Mondiale
+  // S = Satisfactory, MS = Moderately Satisfactory, MU = Moderately Unsatisfactory, U = Unsatisfactory
+  if (rag === "vert")  return { code: "S",  libelle: "Satisfactory" };
+  if (rag === "orange") return { code: "MS", libelle: "Moderately Satisfactory" };
+  if (rag === "rouge") return { code: "MU", libelle: "Moderately Unsatisfactory" };
+  return { code: "—", libelle: "Non évaluable" };
+}
+
+function noteISRGlobale(stats) {
+  // Note globale = synthèse pondérée
+  const total = stats.v + stats.o + stats.r;
+  if (total === 0) return { code: "—", libelle: "Non évaluable" };
+  const score = (stats.v * 3 + stats.o * 2 + stats.r * 1) / (total * 3);
+  if (score >= 0.85) return { code: "S",  libelle: "Satisfactory" };
+  if (score >= 0.65) return { code: "MS", libelle: "Moderately Satisfactory" };
+  if (score >= 0.45) return { code: "MU", libelle: "Moderately Unsatisfactory" };
+  return { code: "U", libelle: "Unsatisfactory" };
+}
+
+function genererISR() {
+  // Compteurs
+  let stats = { v: 0, o: 0, r: 0, n: 0 };
+  DATA.indicateurs.forEach(ind => {
+    if (ind.Type === "na") return;
+    const rag = calculRAG(ind, DATA.config);
+    if (rag === "vert") stats.v++;
+    else if (rag === "orange") stats.o++;
+    else if (rag === "rouge") stats.r++;
+    else stats.n++;
+  });
+
+  const total = stats.v + stats.o + stats.r;
+  const notePdo = noteISRGlobale({ v: stats.v, o: stats.o, r: stats.r });
+  const noteIp = notePdo; // par défaut, identique tant qu'on n'a pas de séparation
+  const tempsEcoule = ratioTempsEcoule(DATA.config);
+
+  // Date du jour formatée
+  const today = new Date();
+  const moisLong = today.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+
+  // Section 1 — Données projet
+  const out = [];
+  out.push(`<h3>1. Project Identification</h3>`);
+  out.push(`<p><b>Nom du projet :</b> ${escapeHTML(DATA.config.nom_projet || "Projet d'Appui à la Sécurité de l'Eau et à l'Assainissement")}<br>`);
+  out.push(`<b>Sigle :</b> ${DATA.config.sigle_projet || "PASEA"}<br>`);
+  out.push(`<b>Crédit IDA :</b> N° 7562-CI<br>`);
+  out.push(`<b>Maître d'ouvrage :</b> MINHAS — Côte d'Ivoire<br>`);
+  out.push(`<b>Période de référence :</b> ${DATA.config.periode_actuelle || "—"}<br>`);
+  out.push(`<b>Date de rédaction :</b> ${moisLong}</p>`);
+
+  // Section 2 — Ratings
+  out.push(`<h3>2. Implementation Status &amp; Ratings</h3>`);
+  out.push(`<p><b>Progress towards achievement of PDO :</b><span class="rating rating-${notePdo.code}">${notePdo.code} — ${notePdo.libelle}</span></p>`);
+  out.push(`<p><b>Overall Implementation Progress :</b><span class="rating rating-${noteIp.code}">${noteIp.code} — ${noteIp.libelle}</span></p>`);
+  out.push(`<p><b>Avancement temporel du projet :</b> ${Math.round(tempsEcoule * 100)}% du calendrier (mars 2024 – mars 2030)</p>`);
+
+  // Section 3 — Synthèse cadre de résultats
+  out.push(`<h3>3. Results Framework — Synthèse</h3>`);
+  out.push(`<p>Le cadre de résultats compte au total ${DATA.indicateurs.length} indicateurs et sous-indicateurs. Sur les ${total} indicateurs évaluables à ce stade, <b>${stats.v}</b> sont en bonne voie d'atteindre les cibles fixées (${total ? Math.round(stats.v/total*100) : 0}%), <b>${stats.o}</b> demandent une vigilance accrue (${total ? Math.round(stats.o/total*100) : 0}%), et <b>${stats.r}</b> présentent un risque de non-atteinte des cibles (${total ? Math.round(stats.r/total*100) : 0}%). Les ${stats.n} indicateurs restants ne sont pas encore évaluables, soit parce que les activités sous-jacentes n'ont pas démarré, soit parce qu'ils relèvent d'un mécanisme d'activation conditionnelle (CERC).</p>`);
+
+  // Section 4 — PDO indicators
+  out.push(`<h3>4. PDO Indicators</h3>`);
+  const odpInds = DATA.indicateurs.filter(i => i.Niveau === "ODP" && !i.Parent_Code);
+  odpInds.forEach(ind => {
+    const rag = calculRAG(ind, DATA.config);
+    const note = noteISR(rag);
+    out.push(`<h4>${ind.Code} — ${escapeHTML(ind.Indicateur)}</h4>`);
+    out.push(`<p>`);
+    out.push(`<b>Notation :</b><span class="rating rating-${note.code}">${note.code}</span> · `);
+    out.push(`<b>Référence :</b> ${fmt(ind.Valeur_Reference, ind.Unite)} (${ind.Date_Reference || "Mars 2024"}) · `);
+    out.push(`<b>Valeur actuelle :</b> ${fmt(ind.Valeur_Actuelle, ind.Unite)} · `);
+    out.push(`<b>Cible mi-parcours (2028) :</b> ${fmt(ind.Cible_MTR, ind.Unite)} · `);
+    out.push(`<b>Cible finale (2030) :</b> ${fmt(ind.Cible_Fin, ind.Unite)}`);
+    if (ind.Commentaire) out.push(`<br><br>${escapeHTML(ind.Commentaire)}`);
+    out.push(`</p>`);
+  });
+
+  // Section 5 — Intermediate indicators
+  out.push(`<h3>5. Intermediate Results Indicators</h3>`);
+  const interInds = DATA.indicateurs.filter(i => i.Niveau !== "ODP" && !i.Parent_Code && i.Type !== "na");
+  const parComp = {};
+  interInds.forEach(ind => {
+    const k = ind.Composante_Nom || "Composante " + ind.Composante;
+    if (!parComp[k]) parComp[k] = [];
+    parComp[k].push(ind);
+  });
+  Object.keys(parComp).forEach(compNom => {
+    out.push(`<h4>${escapeHTML(compNom)}</h4>`);
+    parComp[compNom].forEach(ind => {
+      const rag = calculRAG(ind, DATA.config);
+      const note = noteISR(rag);
+      out.push(`<p>`);
+      out.push(`<b>${ind.Code}</b> — ${escapeHTML(ind.Indicateur)}<br>`);
+      out.push(`Notation <span class="rating rating-${note.code}">${note.code}</span> · `);
+      out.push(`Référence : ${fmt(ind.Valeur_Reference, ind.Unite)} · `);
+      out.push(`Actuel : ${fmt(ind.Valeur_Actuelle, ind.Unite)} · `);
+      out.push(`Cible finale : ${fmt(ind.Cible_Fin, ind.Unite)}`);
+      out.push(`</p>`);
+    });
+  });
+
+  // Section 6 — CBP
+  const cbpInds = DATA.indicateurs.filter(i => i.Marqueur_BM === "CBP");
+  if (cbpInds.length) {
+    out.push(`<h3>6. Performance-Based Conditions (CBP)</h3>`);
+    const totalCbp = cbpInds.reduce((s, i) => s + (num(i.Montant_CBP_USD) || 0), 0);
+    out.push(`<p>Le projet compte ${cbpInds.length} indicateurs sous Conditions Basées sur la Performance, conditionnant le décaissement d'un montant total de ${fmtUsd(totalCbp)} par la Banque mondiale.</p>`);
+    cbpInds.forEach(ind => {
+      const rag = calculRAG(ind, DATA.config);
+      const note = noteISR(rag);
+      out.push(`<p><b>${ind.Code}</b> — ${escapeHTML(ind.Indicateur)} · Notation <span class="rating rating-${note.code}">${note.code}</span> · Montant : ${fmtUsd(num(ind.Montant_CBP_USD))}</p>`);
+    });
+  }
+
+  // Section 7 — Points d'attention et recommandations
+  out.push(`<h3>7. Implementation Issues &amp; Next Steps</h3>`);
+  const enRetard = DATA.indicateurs.filter(i => i.Type !== "na" && !i.Parent_Code && calculRAG(i, DATA.config) === "rouge");
+  const aSurveiller = DATA.indicateurs.filter(i => i.Type !== "na" && !i.Parent_Code && calculRAG(i, DATA.config) === "orange");
+  if (enRetard.length) {
+    out.push(`<h4>Indicateurs en retard appelant un plan de redressement</h4>`);
+    enRetard.forEach(ind => {
+      out.push(`<p>${ind.Code} — ${escapeHTML(ind.Indicateur)}. ${escapeHTML(ind.Commentaire || "")}</p>`);
+    });
+  }
+  if (aSurveiller.length) {
+    out.push(`<h4>Indicateurs à surveiller</h4>`);
+    out.push(`<p>${aSurveiller.length} indicateurs présentent une progression en deçà du rythme attendu et appellent une vigilance dans le prochain trimestre : ${aSurveiller.map(i => i.Code).join(", ")}.</p>`);
+  }
+  out.push(`<h4>Prochaines étapes</h4>`);
+  out.push(`<p>[À compléter par l'équipe : étapes prévues d'ici la prochaine revue, jalons de décaissement attendus, missions de supervision planifiées.]</p>`);
+
+  return out.join("\n");
+}
+
+function ouvrirISR() {
+  const html = genererISR();
+  document.getElementById("isr-output").innerHTML = html;
+  document.getElementById("isr-feedback").textContent = "";
+  document.getElementById("modal-isr").classList.add("show");
+}
+
+function copierISR() {
+  // Récupère le texte brut depuis le HTML
+  const el = document.getElementById("isr-output");
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const fb = document.getElementById("isr-feedback");
+    fb.textContent = "Texte copié dans le presse-papiers.";
+    setTimeout(() => fb.textContent = "", 2500);
+  }).catch(() => {
+    const fb = document.getElementById("isr-feedback");
+    fb.style.color = "var(--red)";
+    fb.textContent = "Copie impossible — sélectionne le texte manuellement.";
+  });
+}
+
+function telechargerISRWord() {
+  // Génère un fichier .doc (HTML compatible Word)
+  const content = document.getElementById("isr-output").innerHTML;
+  const html = `
+    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <head><meta charset='utf-8'>
+    <style>
+      body { font-family: Georgia, serif; font-size: 11pt; line-height: 1.55; color: #1A1A1A; }
+      h3 { color: #0D47A1; font-size: 15pt; margin-top: 18pt; }
+      h4 { color: #6B6B6B; font-size: 10pt; text-transform: uppercase; letter-spacing: 1.2pt; margin-top: 12pt; }
+      .rating { padding: 1pt 6pt; font-weight: bold; }
+      .rating-S { background: #E6F2EB; color: #2D7A4F; }
+      .rating-MS { background: #E3EEF9; color: #1565C0; }
+      .rating-MU { background: #FBEFDC; color: #B8742A; }
+      .rating-U { background: #F6E2E1; color: #B23A3A; }
+    </style></head>
+    <body>
+      <h1 style="font-family: 'Cormorant Garamond', Georgia, serif; color: #0D47A1;">
+        Rapport ISR — Cadre de Résultats PASEA
+      </h1>
+      <p style="color: #6B6B6B; font-style: italic; margin-bottom: 24pt;">
+        Implementation Status &amp; Results Report — ${new Date().toLocaleDateString("fr-FR", { month: "long", year: "numeric" })}
+      </p>
+      ${content}
+    </body></html>
+  `;
+  const blob = new Blob([html], { type: "application/msword" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Rapport_ISR_PASEA_" + (DATA.config.periode_actuelle || "draft") + ".doc";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================================
+// MODE COPIL — présentation plein écran
+// ============================================================================
+let copilSlides = [];
+let copilCurrent = 0;
+
+function batirSlidesCopil() {
+  copilSlides = [];
+
+  // Slide 1 — Couverture ODP
+  copilSlides.push({
+    titre: "Cadre de <em>Résultats</em>",
+    sous: DATA.config.nom_projet || "Projet d'Appui à la Sécurité de l'Eau et à l'Assainissement",
+    rendu: () => `
+      <div style="max-width: 1000px;">
+        <div class="copil-quote">${escapeHTML(DATA.config.odp || "")}</div>
+        <div style="margin-top: 30px; font-size: 14px; color: rgba(245,241,232,0.55); letter-spacing: 1.5px;">
+          PASEA · CRÉDIT IDA N° 7562-CI · MINHAS — CÔTE D'IVOIRE
+        </div>
+      </div>
+    `
+  });
+
+  // Slide 2 — KPIs synthétiques
+  let stats = { total: 0, v: 0, o: 0, r: 0, n: 0 };
+  DATA.indicateurs.forEach(ind => {
+    if (ind.Type === "na") { stats.n++; return; }
+    stats.total++;
+    const rag = calculRAG(ind, DATA.config);
+    if (rag === "vert") stats.v++;
+    else if (rag === "orange") stats.o++;
+    else if (rag === "rouge") stats.r++;
+    else stats.n++;
+  });
+  const tempsEcoule = ratioTempsEcoule(DATA.config);
+
+  copilSlides.push({
+    titre: "État <em>global</em>",
+    sous: "à la période " + (DATA.config.periode_actuelle || "—"),
+    rendu: () => `
+      <div class="copil-kpis" style="max-width: 1200px;">
+        <div class="copil-kpi">
+          <div class="copil-kpi-label">Indicateurs suivis</div>
+          <div class="copil-kpi-value">${stats.total}</div>
+          <div class="copil-kpi-sub">${stats.n} non encore évaluables</div>
+        </div>
+        <div class="copil-kpi vert">
+          <div class="copil-kpi-label">En bonne voie</div>
+          <div class="copil-kpi-value">${stats.v}</div>
+          <div class="copil-kpi-sub">${stats.total ? Math.round(stats.v/stats.total*100) : 0}% du total évaluable</div>
+        </div>
+        <div class="copil-kpi amber">
+          <div class="copil-kpi-label">À surveiller</div>
+          <div class="copil-kpi-value">${stats.o}</div>
+          <div class="copil-kpi-sub">vigilance recommandée</div>
+        </div>
+        <div class="copil-kpi rouge">
+          <div class="copil-kpi-label">En retard</div>
+          <div class="copil-kpi-value">${stats.r}</div>
+          <div class="copil-kpi-sub">plan de redressement requis</div>
+        </div>
+      </div>
+      <div style="margin-top: 40px; max-width: 800px; font-family: var(--serif); font-style: italic; font-size: 19px; color: rgba(245,241,232,0.7); line-height: 1.5;">
+        ${Math.round(tempsEcoule * 100)}% du calendrier du projet écoulé. La revue à mi-parcours est prévue en mars 2028, la clôture en mars 2030.
+      </div>
+    `
+  });
+
+  // Slide 3 — CBP (si applicable)
+  const cbp = DATA.indicateurs.filter(i => i.Marqueur_BM === "CBP");
+  if (cbp.length) {
+    const totalUsd = cbp.reduce((s, i) => s + (num(i.Montant_CBP_USD) || 0), 0);
+    copilSlides.push({
+      titre: "Conditions <em>Basées sur la Performance</em>",
+      sous: cbp.length + " indicateurs conditionnent le décaissement de " + fmtUsd(totalUsd),
+      rendu: () => `
+        <div class="copil-indicateurs" style="max-width: 1200px;">
+          ${cbp.map(ind => {
+            const rag = calculRAG(ind, DATA.config);
+            return `
+              <div class="copil-ind">
+                <div class="copil-ind-head">
+                  <div>
+                    <div class="copil-ind-code">${ind.Code}</div>
+                    <div class="copil-ind-titre">${escapeHTML(ind.Indicateur)}</div>
+                  </div>
+                  <span style="font-family: var(--serif); font-style: italic; font-size: 22px; color: #B8965A; white-space: nowrap;">
+                    ${fmtUsd(num(ind.Montant_CBP_USD))}
+                  </span>
+                </div>
+                <div class="copil-ind-meta">
+                  <span>${labelRAG(rag)}</span>
+                  <span>${fmt(ind.Valeur_Actuelle, ind.Unite)} / ${fmt(ind.Cible_Fin, ind.Unite)}</span>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `
+    });
+  }
+
+  // Slide par composante
+  const groupes = {};
+  DATA.indicateurs.forEach(ind => {
+    if (ind.Parent_Code) return; // pas les sous-indicateurs
+    const key = String(ind.Composante);
+    if (!groupes[key]) groupes[key] = { nom: ind.Composante_Nom, items: [] };
+    groupes[key].items.push(ind);
+  });
+
+  Object.keys(groupes).sort().forEach(k => {
+    const g = groupes[k];
+    copilSlides.push({
+      titre: k === "0" ? "Indicateurs <em>ODP</em>" : "Composante <em>" + k + "</em>",
+      sous: escapeHTML(g.nom),
+      rendu: () => `
+        <div class="copil-indicateurs" style="max-width: 1300px;">
+          ${g.items.map(ind => {
+            const rag = calculRAG(ind, DATA.config);
+            const p = calculProgression(ind);
+            const pct = p !== null ? Math.min(p * 100, 100) : (ind.Type === "booleen" && String(ind.Valeur_Actuelle).toLowerCase() === "oui" ? 100 : 5);
+            return `
+              <div class="copil-ind">
+                <div class="copil-ind-head">
+                  <div class="copil-ind-code">${ind.Code}</div>
+                  <span style="font-size: 11px; color: rgba(245,241,232,0.5); text-transform: uppercase; letter-spacing: 1.2px;">${labelRAG(rag)}</span>
+                </div>
+                <div class="copil-ind-titre">${escapeHTML(ind.Indicateur)}</div>
+                <div class="copil-ind-bar">
+                  <div class="fill ${rag}" style="width: ${pct}%"></div>
+                </div>
+                <div class="copil-ind-meta">
+                  <span>Actuel : <b style="color: #F5F1E8;">${ind.Type === "na" ? "N/A" : fmt(ind.Valeur_Actuelle, ind.Unite)}</b></span>
+                  <span>Cible : <b style="color: #F5F1E8;">${ind.Type === "na" ? "Sur activation" : fmt(ind.Cible_Fin, ind.Unite)}</b></span>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `
+    });
+  });
+}
+
+function rendreSlideCopil() {
+  const slide = copilSlides[copilCurrent];
+  if (!slide) return;
+  document.getElementById("copil-slide").innerHTML = `
+    <div class="copil-slide-eyebrow">Slide ${copilCurrent + 1} sur ${copilSlides.length}</div>
+    <h1 class="copil-slide-titre">${slide.titre}</h1>
+    <div class="copil-slide-sub">${slide.sous}</div>
+    ${slide.rendu()}
+  `;
+  document.getElementById("copil-current").textContent = (copilCurrent + 1);
+  document.getElementById("copil-total").textContent = copilSlides.length;
+  document.getElementById("btn-copil-prev").disabled = copilCurrent === 0;
+  document.getElementById("btn-copil-next").disabled = copilCurrent === copilSlides.length - 1;
+
+  // Dots
+  const dots = document.getElementById("copil-dots");
+  dots.innerHTML = copilSlides.map((_, i) =>
+    `<span class="dot ${i === copilCurrent ? 'active' : ''}" data-slide="${i}"></span>`
+  ).join("");
+  dots.querySelectorAll(".dot").forEach(d => {
+    d.onclick = () => { copilCurrent = parseInt(d.dataset.slide); rendreSlideCopil(); };
+  });
+}
+
+function ouvrirCopil() {
+  batirSlidesCopil();
+  copilCurrent = 0;
+  rendreSlideCopil();
+  document.body.classList.add("copil-mode");
+  document.body.scrollTop = 0;
+}
+
+function fermerCopil() {
+  document.body.classList.remove("copil-mode");
+}
+
+function copilSuivant() {
+  if (copilCurrent < copilSlides.length - 1) { copilCurrent++; rendreSlideCopil(); }
+}
+function copilPrecedent() {
+  if (copilCurrent > 0) { copilCurrent--; rendreSlideCopil(); }
+}
+
+// ============================================================================
 // EXPORT PDF
 // ============================================================================
 function exporterPDF() {
@@ -1300,7 +2239,7 @@ function brancherEvenements() {
   });
 
   document.querySelectorAll("[data-detail]").forEach(b => {
-    b.onclick = () => ouvrirDetail(b.dataset.detail);
+    b.onclick = (e) => { e.stopPropagation(); ouvrirDetail(b.dataset.detail); };
   });
   document.querySelectorAll(".fiche").forEach(f => {
     f.addEventListener("click", e => {
@@ -1323,6 +2262,21 @@ document.getElementById("btn-refresh").onclick = chargerDonnees;
 document.getElementById("btn-export").onclick = exporterPDF;
 document.getElementById("btn-saisie").onclick = () => ouvrirSaisie(null);
 document.getElementById("btn-saisie-submit").onclick = soumettreSaisie;
+document.getElementById("btn-isr").onclick = ouvrirISR;
+document.getElementById("btn-isr-copy").onclick = copierISR;
+document.getElementById("btn-isr-word").onclick = telechargerISRWord;
+document.getElementById("btn-copil").onclick = ouvrirCopil;
+document.getElementById("btn-copil-exit").onclick = fermerCopil;
+document.getElementById("btn-copil-next").onclick = copilSuivant;
+document.getElementById("btn-copil-prev").onclick = copilPrecedent;
+
+// Raccourcis clavier mode COPIL
+document.addEventListener("keydown", e => {
+  if (!document.body.classList.contains("copil-mode")) return;
+  if (e.key === "Escape") fermerCopil();
+  else if (e.key === "ArrowRight" || e.key === " ") copilSuivant();
+  else if (e.key === "ArrowLeft") copilPrecedent();
+});
 
 // ============================================================================
 // UTILS
