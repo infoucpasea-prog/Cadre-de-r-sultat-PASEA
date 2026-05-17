@@ -1922,7 +1922,12 @@ let DATA = { indicateurs: [], config: {} };
 // CHARGEMENT INITIAL
 // ============================================================================
 async function chargerDonnees() {
-  document.getElementById("main").innerHTML = '<div class="loader" id="loader">Chargement des indicateurs</div>';
+  const loader = document.getElementById("loader");
+  if (loader) {
+    loader.textContent = "Chargement des indicateurs";
+    loader.style.color = "";
+    loader.style.display = "block";
+  }
   try {
     const res = await fetch(API_URL + "?action=getAll");
     const json = await res.json();
@@ -1930,9 +1935,12 @@ async function chargerDonnees() {
     DATA = json;
     rendreInterface();
   } catch (err) {
-    document.getElementById("main").innerHTML =
-      '<div class="loader" style="color: var(--red);">Erreur de chargement : ' +
-      err.message + '</div>';
+    if (loader) {
+      loader.textContent = "Erreur de chargement : " + err.message;
+      loader.style.color = "var(--red)";
+      loader.style.display = "block";
+    }
+    console.error("chargerDonnees error:", err);
   }
 }
 
